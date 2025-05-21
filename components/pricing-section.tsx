@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { Check } from "lucide-react"
+import { Check, ClipboardList, Clock } from "lucide-react"
 
 export function PricingSection() {
   const { t, dir } = useLanguage()
@@ -108,18 +108,18 @@ export function PricingSection() {
           <div className="mt-8 bg-card rounded-xl p-6 border shadow-lg">
             <h3 className="text-xl font-bold mb-4 text-center">{t("pricing.benefits")}</h3>
             <div className="grid md:grid-cols-3 gap-4">
-              <div className="flex items-start space-x-2">
+              <motion.div className="flex items-start space-x-2" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }}>
                 <Check className="h-5 w-5 text-primary mt-0.5" />
                 <span>{t("pricing.benefits1")}</span>
-              </div>
-              <div className="flex items-start space-x-2">
-                <Check className="h-5 w-5 text-primary mt-0.5" />
+              </motion.div>
+              <motion.div className="flex items-start space-x-2" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.2 }}>
+                <ClipboardList className="h-5 w-5 text-primary mt-0.5" />
                 <span>{t("pricing.benefits2")}</span>
-              </div>
-              <div className="flex items-start space-x-2">
-                <Check className="h-5 w-5 text-primary mt-0.5" />
+              </motion.div>
+              <motion.div className="flex items-start space-x-2" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.3 }}>
+                <Clock className="h-5 w-5 text-primary mt-0.5" />
                 <span>{t("pricing.benefits3")}</span>
-              </div>
+              </motion.div>
             </div>
           </div>
         </motion.div>

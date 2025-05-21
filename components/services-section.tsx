@@ -82,11 +82,11 @@ export function ServicesSection() {
                   <CardDescription>{service.description}</CardDescription>
                 </CardContent>
                 <CardFooter className="flex flex-col gap-2 pt-2">
-                  <Button variant="outline" className="w-full">
-                    {t("services.details")}
+                  <Button asChild className="w-full">
+                    <Link href="#pricing">{t("services.details")}</Link>
                   </Button>
                   <Button asChild className="w-full">
-                    <Link href="#contact">{t("services.book")}</Link>
+                    <Link href={`https://wa.me/+40741318528?text=I%20would%20like%20to%20book%20a%20${encodeURIComponent(service.title)}%20service.`}>{t("services.book")}</Link>
                   </Button>
                 </CardFooter>
               </Card>

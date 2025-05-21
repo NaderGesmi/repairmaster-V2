@@ -2,7 +2,7 @@
 
 import { useLanguage } from "@/components/language-provider"
 import { motion } from "framer-motion"
-import { Phone } from "lucide-react"
+import { Phone, Instagram } from "lucide-react"
 import Image from "next/image"
 
 export function SocialProof() {
@@ -20,41 +20,29 @@ export function SocialProof() {
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <h3 className="text-xl font-medium">{t("socialProof.title")}</h3>
-          <div className="grid grid-cols-2 gap-4 mt-6">
-            <motion.div
-              className="relative h-40 rounded-lg overflow-hidden"
-              whileHover={{ scale: 1.03 }}
-              transition={{ duration: 0.3 }}
+          <div className="flex flex-wrap justify-center items-center gap-6">
+            <motion.a
+              href="https://www.tiktok.com/@repairversehub"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/diagnostics.jpg-PKxHvAM4wiPiGqVG1zyLyxp09JGGFG.jpeg"
-                alt="Diagnostic services"
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
-                <div className="p-3 text-white">
-                  <p className="font-medium">Professional Diagnostics</p>
-                </div>
-              </div>
-            </motion.div>
-            <motion.div
-              className="relative h-40 rounded-lg overflow-hidden"
-              whileHover={{ scale: 1.03 }}
-              transition={{ duration: 0.3 }}
+              <i className="fab fa-tiktok h-5 w-5 text-primary"></i>
+              <span className="text-sm font-medium">TikTok @repairversehub</span>
+            </motion.a>
+            <motion.a
+              href="https://www.instagram.com/repairversehub"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ac-repair.jpg-9wjrINqN4wrxKjiKRqIIa3TQ136jZF.jpeg"
-                alt="AC repair"
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
-                <div className="p-3 text-white">
-                  <p className="font-medium">Expert AC Repairs</p>
-                </div>
-              </div>
-            </motion.div>
+              <Instagram className="h-5 w-5 text-primary" />
+              <span className="text-sm font-medium">Instagram @repairversehub</span>
+            </motion.a>
           </div>
         </div>
         <motion.div
@@ -72,9 +60,24 @@ export function SocialProof() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Phone className="h-5 w-5 mr-2 rtl:mr-0 rtl:ml-2" />
+            <Phone className="h-5 w-5 mr-2 rtl:mr-0 rtl:ml-2 text-primary" />
             +40 741 318 528
           </motion.a>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <a
+              href="#contact"
+              className="mt-4 inline-block px-6 py-3 bg-primary text-primary-foreground font-bold rounded-md hover:bg-primary/90 transition-colors"
+            >
+              Book Online
+            </a>
+          </motion.div>
         </motion.div>
       </div>
     </motion.section>

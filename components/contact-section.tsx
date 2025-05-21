@@ -12,7 +12,7 @@ import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { format } from "date-fns"
-import { CalendarIcon, Loader2, CheckCircle, Phone } from "lucide-react"
+import { CalendarIcon, Loader2, CheckCircle2, Phone, MessageSquare, Mail, Clock, User, Building2, Wrench } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { motion } from "framer-motion"
 import Image from "next/image"
@@ -85,188 +85,216 @@ export function ContactSection() {
     }
   }
 
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  }
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 },
+  }
+
   return (
-    <motion.section
-      id="contact"
-      className="py-16 bg-background"
-      dir={dir}
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
-    >
+    <section id="contact" className="py-20 bg-gradient-to-b from-muted to-background" dir={dir}>
       <div className="container px-4 md:px-6">
-        <div className="flex flex-col items-center justify-center space-y-4 text-center">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">{t("contact.title")}</h2>
-        </div>
+        <motion.div 
+          className="flex flex-col items-center justify-center space-y-4 text-center"
+          variants={container}
+          initial="hidden"
+          animate="show"
+        >
+          <motion.h2 className="text-3xl font-bold" variants={item}>{t("contact.title")}</motion.h2>
+          <motion.p className="text-muted-foreground max-w-[600px]" variants={item}>
+            {t("contact.subtitle")}
+          </motion.p>
+        </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8 mt-12">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="rounded-xl overflow-hidden shadow-lg">
-              <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/diagnostics.jpg-PKxHvAM4wiPiGqVG1zyLyxp09JGGFG.jpeg"
-                alt="Professional diagnostics"
-                width={600}
-                height={400}
-                className="w-full h-64 object-cover"
-              />
-            </div>
-            <div className="mt-8 space-y-4">
-              <h3 className="text-xl font-bold">{t("contact.orContactDirectly")}</h3>
-              <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                <Phone className="h-5 w-5 text-primary" />
-                <a href="tel:+40741318528" className="hover:underline">
-                  +40 741 318 528
-                </a>
-              </div>
-              <div className="grid grid-cols-2 gap-4 mt-6">
-                <div className="relative h-32 rounded-lg overflow-hidden">
-                  <Image
-                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ac-repair.jpg-9wjrINqN4wrxKjiKRqIIa3TQ136jZF.jpeg"
-                    alt="AC repair"
-                    fill
-                    className="object-cover"
-                  />
+        <div className="mx-auto max-w-4xl mt-12">
+          <div className="grid gap-8 md:grid-cols-2">
+            <motion.div 
+              className="space-y-6"
+              variants={container}
+              initial="hidden"
+              animate="show"
+            >
+              <motion.div className="space-y-4" variants={item}>
+                <div className="flex items-center space-x-3 rtl:space-x-reverse">
+                  <User className="h-5 w-5 text-primary" />
+                  <Label htmlFor="name">{t("contact.name")}</Label>
                 </div>
-                <div className="relative h-32 rounded-lg overflow-hidden">
-                  <Image
-                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/freon.jpg-L1D9LsAwzSX4Duuu4996tiQxCjHKA2.jpeg"
-                    alt="Freon check"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <form className="grid gap-6 bg-card p-6 rounded-xl shadow-lg border" onSubmit={handleSubmit}>
-              <div className="grid gap-2">
-                <Label htmlFor="name" className={errors.name ? "text-destructive" : ""}>
-                  {t("contact.name")}
-                </Label>
                 <Input
                   id="name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder={t("contact.namePlaceholder")}
-                  className={errors.name ? "border-destructive" : ""}
+                  className="w-full"
                 />
                 {errors.name && <p className="text-sm text-destructive">{errors.name}</p>}
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="email" className={errors.email ? "text-destructive" : ""}>
-                  {t("contact.email")}
-                </Label>
+              </motion.div>
+
+              <motion.div className="space-y-4" variants={item}>
+                <div className="flex items-center space-x-3 rtl:space-x-reverse">
+                  <Mail className="h-5 w-5 text-primary" />
+                  <Label htmlFor="email">{t("contact.email")}</Label>
+                </div>
                 <Input
                   id="email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={t("contact.emailPlaceholder")}
-                  className={errors.email ? "border-destructive" : ""}
+                  className="w-full"
                 />
                 {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="phone" className={errors.phone ? "text-destructive" : ""}>
-                  {t("contact.phone")}
-                </Label>
+              </motion.div>
+
+              <motion.div className="space-y-4" variants={item}>
+                <div className="flex items-center space-x-3 rtl:space-x-reverse">
+                  <Phone className="h-5 w-5 text-primary" />
+                  <Label htmlFor="phone">{t("contact.phone")}</Label>
+                </div>
                 <Input
                   id="phone"
                   type="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder={t("contact.phonePlaceholder")}
-                  className={errors.phone ? "border-destructive" : ""}
+                  className="w-full"
                 />
                 {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
-              </div>
-              <div className="grid gap-2">
-                <Label className={errors.date ? "text-destructive" : ""}>{t("contact.date")}</Label>
+              </motion.div>
+
+              <motion.div className="space-y-4" variants={item}>
+                <div className="flex items-center space-x-3 rtl:space-x-reverse">
+                  <Calendar className="h-5 w-5 text-primary" />
+                  <Label>{t("contact.date")}</Label>
+                </div>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
                       variant="outline"
                       className={cn(
                         "w-full justify-start text-left font-normal",
-                        !date && "text-muted-foreground",
-                        errors.date && "border-destructive",
+                        !date && "text-muted-foreground"
                       )}
                     >
-                      <CalendarIcon className="mr-2 h-4 w-4 rtl:mr-0 rtl:ml-2" />
-                      {date ? format(date, "PPP") : t("contact.selectDate")}
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {date ? format(date, "PPP") : <span>{t("contact.selectDate")}</span>}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0">
-                    <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
+                    <Calendar
+                      mode="single"
+                      selected={date}
+                      onSelect={setDate}
+                      initialFocus
+                    />
                   </PopoverContent>
                 </Popover>
                 {errors.date && <p className="text-sm text-destructive">{errors.date}</p>}
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="time" className={errors.time ? "text-destructive" : ""}>
-                  {t("contact.time")}
-                </Label>
+              </motion.div>
+
+              <motion.div className="space-y-4" variants={item}>
+                <div className="flex items-center space-x-3 rtl:space-x-reverse">
+                  <Clock className="h-5 w-5 text-primary" />
+                  <Label>{t("contact.time")}</Label>
+                </div>
                 <Select value={time} onValueChange={setTime}>
-                  <SelectTrigger id="time" className={errors.time ? "border-destructive" : ""}>
+                  <SelectTrigger>
                     <SelectValue placeholder={t("contact.selectTime")} />
                   </SelectTrigger>
                   <SelectContent>
-                    {timeSlots.map((timeSlot) => (
-                      <SelectItem key={timeSlot} value={timeSlot}>
-                        {timeSlot}
+                    {timeSlots.map((slot) => (
+                      <SelectItem key={slot} value={slot}>
+                        {slot}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
                 {errors.time && <p className="text-sm text-destructive">{errors.time}</p>}
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="message">{t("contact.message")}</Label>
+              </motion.div>
+
+              <motion.div className="space-y-4" variants={item}>
+                <div className="flex items-center space-x-3 rtl:space-x-reverse">
+                  <MessageSquare className="h-5 w-5 text-primary" />
+                  <Label htmlFor="message">{t("contact.message")}</Label>
+                </div>
                 <Textarea
                   id="message"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder={t("contact.messagePlaceholder")}
+                  className="min-h-[100px]"
                 />
-              </div>
-              <Button type="submit" className="w-full" disabled={isSubmitting}>
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin rtl:mr-0 rtl:ml-2" />
-                    {t("contact.submitting")}
-                  </>
-                ) : (
-                  t("contact.submit")
-                )}
-              </Button>
+              </motion.div>
 
-              {formStatus === "success" && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="p-3 rounded-md bg-green-50 text-green-600 dark:bg-green-900/20 dark:text-green-400 flex items-center"
+              <motion.div variants={item}>
+                <Button
+                  className="w-full"
+                  onClick={handleSubmit}
+                  disabled={isSubmitting}
                 >
-                  <CheckCircle className="h-5 w-5 mr-2 rtl:mr-0 rtl:ml-2" />
-                  <p>{t("contact.successMessage")}</p>
-                </motion.div>
-              )}
-            </form>
-          </motion.div>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      {t("contact.submitting")}
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircle2 className="mr-2 h-4 w-4" />
+                      {t("contact.submit")}
+                    </>
+                  )}
+                </Button>
+              </motion.div>
+            </motion.div>
+
+            <motion.div 
+              className="space-y-8"
+              variants={container}
+              initial="hidden"
+              animate="show"
+            >
+              <motion.div className="space-y-4" variants={item}>
+                <h3 className="text-xl font-bold">{t("contact.orContactDirectly")}</h3>
+                <div className="flex flex-col space-y-4">
+                  <a
+                    href="tel:+40741318528"
+                    className="flex items-center space-x-3 p-4 rounded-lg border bg-card hover:bg-accent transition-colors rtl:space-x-reverse"
+                  >
+                    <Phone className="h-5 w-5 text-primary" />
+                    <span>+40 741 318 528</span>
+                  </a>
+                  <a
+                    href="https://wa.me/40741318528"
+                    className="flex items-center space-x-3 p-4 rounded-lg border bg-card hover:bg-accent transition-colors rtl:space-x-reverse"
+                  >
+                    <MessageSquare className="h-5 w-5 text-primary" />
+                    <span>WhatsApp</span>
+                  </a>
+                  <a
+                    href="mailto:contact@repairmaster.ro"
+                    className="flex items-center space-x-3 p-4 rounded-lg border bg-card hover:bg-accent transition-colors rtl:space-x-reverse"
+                  >
+                    <Mail className="h-5 w-5 text-primary" />
+                    <span>contact@repairmaster.ro</span>
+                  </a>
+                </div>
+              </motion.div>
+
+              <motion.div className="space-y-4" variants={item}>
+                <h3 className="text-xl font-bold">{t("contact.ourServices")}</h3>
+              </motion.div>
+            </motion.div>
+          </div>
         </div>
       </div>
-    </motion.section>
+    </section>
   )
 }

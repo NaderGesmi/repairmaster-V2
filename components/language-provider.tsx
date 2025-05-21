@@ -16,16 +16,8 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Language>("en")
+  const [language, setLanguage] = useState<Language>("ro")
   const [dir, setDir] = useState<Direction>("ltr")
-
-  useEffect(() => {
-    // Check if browser language is available in our translations
-    const browserLang = navigator.language.split("-")[0] as Language
-    if (browserLang && ["en", "ro", "ar"].includes(browserLang)) {
-      setLanguage(browserLang)
-    }
-  }, [])
 
   useEffect(() => {
     // Set direction based on language
