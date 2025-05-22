@@ -115,8 +115,16 @@ export function ContactSection() {
 
         <div className="grid gap-8 md:grid-cols-2 mt-12">
           <div className="space-y-6">
-            {/* Hidden form for Netlify build */}
-            <form name="booking" data-netlify="true" hidden>
+            {/* Static form for Netlify build */}
+            <form 
+              name="booking" 
+              method="POST"
+              data-netlify="true" 
+              data-netlify-honeypot="bot-field" 
+              hidden
+            >
+              <input type="hidden" name="form-name" value="booking" />
+              <input type="hidden" name="bot-field" />
               <input type="text" name="name" />
               <input type="email" name="email" />
               <input type="tel" name="phone" />
@@ -125,19 +133,18 @@ export function ContactSection() {
               <textarea name="message"></textarea>
             </form>
 
-            {/* Main form */}
-            <form 
+            {/* Interactive form */}
+            <form
               name="booking"
               method="POST"
-              action="/"
               data-netlify="true"
               data-netlify-honeypot="bot-field"
+              data-netlify-success={getRedirectPath()}
               onSubmit={handleSubmit}
               className="space-y-6"
             >
               <input type="hidden" name="form-name" value="booking" />
               <input type="hidden" name="bot-field" />
-              <input type="hidden" name="success" value={getRedirectPath()} />
 
               {formStatus === "success" && (
                 <div className="p-4 bg-green-50 border border-green-200 rounded-lg text-green-700">
