@@ -129,7 +129,8 @@ export function ContactSection() {
             <form 
               name="booking"
               method="POST"
-              action="/"
+              action="/api/booking"
+              encType="application/x-www-form-urlencoded"
               data-netlify="true"
               data-netlify-honeypot="bot-field"
               onSubmit={handleSubmit}
