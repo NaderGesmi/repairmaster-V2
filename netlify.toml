@@ -8,6 +8,12 @@
 [[plugins]]
   package = "@netlify/next"
 
+[[plugins]]
+  package = "@netlify/plugin-lighthouse"
+  [plugins.inputs]
+    threshold = 0.8
+    output_path = "lighthouse-report"
+
 [build.environment]
   NEXT_USE_NETLIFY_EDGE = "true"
   NEXT_PRIVATE_TARGET = "server"
