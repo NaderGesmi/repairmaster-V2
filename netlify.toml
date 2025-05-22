@@ -9,9 +9,8 @@
   package = "@netlify/plugin-nextjs"
 
 [build.environment]
-  NEXT_USE_NETLIFY_EDGE = "true"
-  NEXT_PRIVATE_TARGET = "server"
-  NETLIFY_NEXT_PLUGIN_SKIP = "true"
+  NEXT_TELEMETRY_DISABLED = "1"
+  NODE_VERSION = "18"
 
 [[redirects]]
   from = "/*"
