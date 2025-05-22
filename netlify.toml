@@ -2,8 +2,11 @@
   command = "pnpm run build"
   publish = ".next"
 
+[functions]
+  included_files = ["next.config.js"]
+
 [[plugins]]
-  package = "@netlify/plugin-nextjs"
+  package = "@netlify/next"
 
 [build.environment]
   NEXT_USE_NETLIFY_EDGE = "true"
