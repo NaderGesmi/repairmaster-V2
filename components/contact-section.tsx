@@ -27,7 +27,7 @@ import {
 import { cn } from "@/lib/utils"
 
 export function ContactSection() {
-  const { t, dir } = useLanguage()
+  const { t, dir, language } = useLanguage()
   const [date, setDate] = useState<Date>()
   const [time, setTime] = useState<string>("")
   const [name, setName] = useState("")
@@ -75,9 +75,7 @@ export function ContactSection() {
     setFormStatus("idle")
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500))
-
+      // The form will be handled by Netlify Forms
       setFormStatus("success")
 
       // Reset form
@@ -94,6 +92,17 @@ export function ContactSection() {
     }
   }
 
+  const getRedirectPath = () => {
+    switch (language) {
+      case "ro":
+        return "/multumim"
+      case "ar":
+        return "/shukran"
+      default:
+        return "/thank-you"
+    }
+  }
+
   return (
     <section id="contact" className="py-20 bg-gradient-to-b from-muted to-background" dir={dir}>
       <div className="container px-4 md:px-6">
@@ -106,7 +115,44 @@ export function ContactSection() {
 
         <div className="grid gap-8 md:grid-cols-2 mt-12">
           <div className="space-y-6">
-            <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Hidden form for Netlify build */}
+            <form name="booking" data-netlify="true" hidden>
+              <input type="text" name="name" />
+              <input type="email" name="email" />
+              <input type="tel" name="phone" />
+              <input type="date" name="date" />
+              <input type="text" name="time" />
+              <textarea name="message"></textarea>
+            </form>
+
+            {/* Main form */}
+            <form 
+              name="booking"
+              method="POST"
+              action="/"
+              data-netlify="true"
+              data-netlify-honeypot="bot-field"
+              onSubmit={handleSubmit}
+              className="space-y-6"
+            >
+              <input type="hidden" name="form-name" value="booking" />
+              <input type="hidden" name="bot-field" />
+              <input type="hidden" name="success" value={getRedirectPath()} />
+
+              {formStatus === "success" && (
+                <div className="p-4 bg-green-50 border border-green-200 rounded-lg text-green-700">
+                  <p className="font-medium">{t("contact.toast.success.title")}</p>
+                  <p className="text-sm">{t("contact.toast.success.description")}</p>
+                </div>
+              )}
+
+              {formStatus === "error" && (
+                <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
+                  <p className="font-medium">{t("contact.toast.error.title")}</p>
+                  <p className="text-sm">{t("contact.toast.error.description")}</p>
+                </div>
+              )}
+
               <div className="space-y-4">
                 <div className="flex items-center space-x-3 rtl:space-x-reverse">
                   <User className="h-5 w-5 text-primary" />
@@ -114,6 +160,7 @@ export function ContactSection() {
                 </div>
                 <Input
                   id="name"
+                  name="name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder={t("contact.namePlaceholder")}
@@ -129,6 +176,7 @@ export function ContactSection() {
                 </div>
                 <Input
                   id="email"
+                  name="email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -145,6 +193,7 @@ export function ContactSection() {
                 </div>
                 <Input
                   id="phone"
+                  name="phone"
                   type="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
@@ -186,6 +235,7 @@ export function ContactSection() {
                     />
                   </PopoverContent>
                 </Popover>
+                <input type="hidden" name="date" value={date ? format(date, "yyyy-MM-dd") : ""} />
                 {errors.date && <p className="text-sm text-destructive">{errors.date}</p>}
               </div>
 
@@ -206,6 +256,7 @@ export function ContactSection() {
                     ))}
                   </SelectContent>
                 </Select>
+                <input type="hidden" name="time" value={time} />
                 {errors.time && <p className="text-sm text-destructive">{errors.time}</p>}
               </div>
 
@@ -216,6 +267,7 @@ export function ContactSection() {
                 </div>
                 <Textarea
                   id="message"
+                  name="message"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder={t("contact.messagePlaceholder")}
@@ -251,7 +303,7 @@ export function ContactSection() {
                 <MessageSquare className="h-5 w-5 text-primary" />
                 {t("contact.orContactDirectly")}
               </h3>
-              <div className="flex flex-col space-y-4">
+              <div className="space-y-4">
                 <a
                   href="tel:+40741318528"
                   className="flex items-center space-x-3 p-4 rounded-lg border bg-card hover:bg-accent transition-colors rtl:space-x-reverse group"
