@@ -86,7 +86,7 @@ export function ServicesSection() {
                     <Link href="#pricing">{t("services.details")}</Link>
                   </Button>
                   <Button asChild className="w-full">
-                    <Link href={`https://wa.me/+40741318528?text=I%20would%20like%20to%20book%20a%20${encodeURIComponent(service.title)}%20service.`}>{t("services.book")}</Link>
+                    <Link href={`https://wa.me/+40741318528?text=A%C8%99%20dori%20s%C4%83%20programez%20un%20serviciu%20de%20${encodeURIComponent(service.title)}.`}>{t("services.book")}</Link>
                   </Button>
                 </CardFooter>
               </Card>

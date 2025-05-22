@@ -1,7 +1,5 @@
 "use client"
 
-import type React from "react"
-
 import { useState } from "react"
 import { useLanguage } from "@/components/language-provider"
 import { Button } from "@/components/ui/button"
@@ -12,10 +10,21 @@ import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { format } from "date-fns"
-import { CalendarIcon, Loader2, CheckCircle2, Phone, MessageSquare, Mail, Clock, User, Building2, Wrench } from "lucide-react"
+import { 
+  CalendarIcon, 
+  Loader2, 
+  CheckCircle2, 
+  Phone, 
+  MessageSquare, 
+  Mail, 
+  Clock, 
+  User, 
+  Building2, 
+  Wrench, 
+  Shield, 
+  Settings 
+} from "lucide-react"
 import { cn } from "@/lib/utils"
-import { motion } from "framer-motion"
-import Image from "next/image"
 
 export function ContactSection() {
   const { t, dir } = useLanguage()
@@ -85,45 +94,20 @@ export function ContactSection() {
     }
   }
 
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  }
-
-  const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 },
-  }
-
   return (
     <section id="contact" className="py-20 bg-gradient-to-b from-muted to-background" dir={dir}>
       <div className="container px-4 md:px-6">
-        <motion.div 
-          className="flex flex-col items-center justify-center space-y-4 text-center"
-          variants={container}
-          initial="hidden"
-          animate="show"
-        >
-          <motion.h2 className="text-3xl font-bold" variants={item}>{t("contact.title")}</motion.h2>
-          <motion.p className="text-muted-foreground max-w-[600px]" variants={item}>
+        <div className="flex flex-col items-center justify-center space-y-4 text-center">
+          <h2 className="text-3xl font-bold">{t("contact.title")}</h2>
+          <p className="text-muted-foreground max-w-[600px]">
             {t("contact.subtitle")}
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
-        <div className="mx-auto max-w-4xl mt-12">
-          <div className="grid gap-8 md:grid-cols-2">
-            <motion.div 
-              className="space-y-6"
-              variants={container}
-              initial="hidden"
-              animate="show"
-            >
-              <motion.div className="space-y-4" variants={item}>
+        <div className="grid gap-8 md:grid-cols-2 mt-12">
+          <div className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="space-y-4">
                 <div className="flex items-center space-x-3 rtl:space-x-reverse">
                   <User className="h-5 w-5 text-primary" />
                   <Label htmlFor="name">{t("contact.name")}</Label>
@@ -136,9 +120,9 @@ export function ContactSection() {
                   className="w-full"
                 />
                 {errors.name && <p className="text-sm text-destructive">{errors.name}</p>}
-              </motion.div>
+              </div>
 
-              <motion.div className="space-y-4" variants={item}>
+              <div className="space-y-4">
                 <div className="flex items-center space-x-3 rtl:space-x-reverse">
                   <Mail className="h-5 w-5 text-primary" />
                   <Label htmlFor="email">{t("contact.email")}</Label>
@@ -152,9 +136,9 @@ export function ContactSection() {
                   className="w-full"
                 />
                 {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
-              </motion.div>
+              </div>
 
-              <motion.div className="space-y-4" variants={item}>
+              <div className="space-y-4">
                 <div className="flex items-center space-x-3 rtl:space-x-reverse">
                   <Phone className="h-5 w-5 text-primary" />
                   <Label htmlFor="phone">{t("contact.phone")}</Label>
@@ -168,11 +152,11 @@ export function ContactSection() {
                   className="w-full"
                 />
                 {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
-              </motion.div>
+              </div>
 
-              <motion.div className="space-y-4" variants={item}>
+              <div className="space-y-4">
                 <div className="flex items-center space-x-3 rtl:space-x-reverse">
-                  <Calendar className="h-5 w-5 text-primary" />
+                  <CalendarIcon className="h-5 w-5 text-primary" />
                   <Label>{t("contact.date")}</Label>
                 </div>
                 <Popover>
@@ -188,7 +172,12 @@ export function ContactSection() {
                       {date ? format(date, "PPP") : <span>{t("contact.selectDate")}</span>}
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0">
+                  <PopoverContent 
+                    className="w-auto p-0 z-[100]"
+                    side="bottom"
+                    align="start"
+                    sideOffset={4}
+                  >
                     <Calendar
                       mode="single"
                       selected={date}
@@ -198,18 +187,18 @@ export function ContactSection() {
                   </PopoverContent>
                 </Popover>
                 {errors.date && <p className="text-sm text-destructive">{errors.date}</p>}
-              </motion.div>
+              </div>
 
-              <motion.div className="space-y-4" variants={item}>
+              <div className="space-y-4">
                 <div className="flex items-center space-x-3 rtl:space-x-reverse">
                   <Clock className="h-5 w-5 text-primary" />
                   <Label>{t("contact.time")}</Label>
                 </div>
                 <Select value={time} onValueChange={setTime}>
-                  <SelectTrigger>
+                  <SelectTrigger className="w-full">
                     <SelectValue placeholder={t("contact.selectTime")} />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="z-50">
                     {timeSlots.map((slot) => (
                       <SelectItem key={slot} value={slot}>
                         {slot}
@@ -218,9 +207,9 @@ export function ContactSection() {
                   </SelectContent>
                 </Select>
                 {errors.time && <p className="text-sm text-destructive">{errors.time}</p>}
-              </motion.div>
+              </div>
 
-              <motion.div className="space-y-4" variants={item}>
+              <div className="space-y-4">
                 <div className="flex items-center space-x-3 rtl:space-x-reverse">
                   <MessageSquare className="h-5 w-5 text-primary" />
                   <Label htmlFor="message">{t("contact.message")}</Label>
@@ -232,12 +221,12 @@ export function ContactSection() {
                   placeholder={t("contact.messagePlaceholder")}
                   className="min-h-[100px]"
                 />
-              </motion.div>
+              </div>
 
-              <motion.div variants={item}>
+              <div>
                 <Button
+                  type="submit"
                   className="w-full"
-                  onClick={handleSubmit}
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
@@ -252,46 +241,79 @@ export function ContactSection() {
                     </>
                   )}
                 </Button>
-              </motion.div>
-            </motion.div>
+              </div>
+            </form>
+          </div>
 
-            <motion.div 
-              className="space-y-8"
-              variants={container}
-              initial="hidden"
-              animate="show"
-            >
-              <motion.div className="space-y-4" variants={item}>
-                <h3 className="text-xl font-bold">{t("contact.orContactDirectly")}</h3>
-                <div className="flex flex-col space-y-4">
-                  <a
-                    href="tel:+40741318528"
-                    className="flex items-center space-x-3 p-4 rounded-lg border bg-card hover:bg-accent transition-colors rtl:space-x-reverse"
-                  >
+          <div className="space-y-8">
+            <div className="space-y-4">
+              <h3 className="text-xl font-bold flex items-center gap-2">
+                <MessageSquare className="h-5 w-5 text-primary" />
+                {t("contact.orContactDirectly")}
+              </h3>
+              <div className="flex flex-col space-y-4">
+                <a
+                  href="tel:+40741318528"
+                  className="flex items-center space-x-3 p-4 rounded-lg border bg-card hover:bg-accent transition-colors rtl:space-x-reverse group"
+                >
+                  <div className="p-2 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors">
                     <Phone className="h-5 w-5 text-primary" />
-                    <span>+40 741 318 528</span>
-                  </a>
-                  <a
-                    href="https://wa.me/40741318528"
-                    className="flex items-center space-x-3 p-4 rounded-lg border bg-card hover:bg-accent transition-colors rtl:space-x-reverse"
-                  >
+                  </div>
+                  <span className="font-medium">+40 741 318 528</span>
+                </a>
+                <a
+                  href="https://wa.me/40741318528"
+                  className="flex items-center space-x-3 p-4 rounded-lg border bg-card hover:bg-accent transition-colors rtl:space-x-reverse group"
+                >
+                  <div className="p-2 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors">
                     <MessageSquare className="h-5 w-5 text-primary" />
-                    <span>WhatsApp</span>
-                  </a>
-                  <a
-                    href="mailto:contact@repairmaster.ro"
-                    className="flex items-center space-x-3 p-4 rounded-lg border bg-card hover:bg-accent transition-colors rtl:space-x-reverse"
-                  >
+                  </div>
+                  <span className="font-medium">WhatsApp</span>
+                </a>
+                <a
+                  href="mailto:contact@repairmaster.ro"
+                  className="flex items-center space-x-3 p-4 rounded-lg border bg-card hover:bg-accent transition-colors rtl:space-x-reverse group"
+                >
+                  <div className="p-2 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors">
                     <Mail className="h-5 w-5 text-primary" />
-                    <span>contact@repairmaster.ro</span>
-                  </a>
-                </div>
-              </motion.div>
+                  </div>
+                  <span className="font-medium">contact@repairmaster.ro</span>
+                </a>
+              </div>
+            </div>
 
-              <motion.div className="space-y-4" variants={item}>
-                <h3 className="text-xl font-bold">{t("contact.ourServices")}</h3>
-              </motion.div>
-            </motion.div>
+            <div className="space-y-4">
+              <h3 className="text-xl font-bold flex items-center gap-2">
+                <Wrench className="h-5 w-5 text-primary" />
+                {t("contact.ourServices")}
+              </h3>
+              <div className="grid gap-4">
+                <div className="flex items-center space-x-3 p-4 rounded-lg border bg-card rtl:space-x-reverse">
+                  <div className="p-2 rounded-full bg-primary/10">
+                    <Wrench className="h-5 w-5 text-primary" />
+                  </div>
+                  <span className="font-medium">{t("services.tv.title")}</span>
+                </div>
+                <div className="flex items-center space-x-3 p-4 rounded-lg border bg-card rtl:space-x-reverse">
+                  <div className="p-2 rounded-full bg-primary/10">
+                    <Settings className="h-5 w-5 text-primary" />
+                  </div>
+                  <span className="font-medium">{t("services.acCleaning.title")}</span>
+                </div>
+                <div className="flex items-center space-x-3 p-4 rounded-lg border bg-card rtl:space-x-reverse">
+                  <div className="p-2 rounded-full bg-primary/10">
+                    <Building2 className="h-5 w-5 text-primary" />
+                  </div>
+                  <span className="font-medium">{t("services.acInstallation.title")}</span>
+                </div>
+                <div className="flex items-center space-x-3 p-4 rounded-lg border bg-card rtl:space-x-reverse">
+                  <div className="p-2 rounded-full bg-primary/10">
+                    <Shield className="h-5 w-5 text-primary" />
+                  </div>
+                  <span className="font-medium">{t("services.freon.title")}</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

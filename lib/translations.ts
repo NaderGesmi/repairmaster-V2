@@ -134,6 +134,11 @@ export const translations = {
       hours: "Hours: Monday - Sunday: 18:00 - 22:00",
       rights: "All rights reserved.",
     },
+    social: {
+      seeRealRepairs: "See real repair videos on:",
+      needQuickService: "Need quick service?",
+      callNow: "Call us now or book online for a quick response!"
+    },
   },
   ro: {
     navbar: {
@@ -273,6 +278,11 @@ export const translations = {
       hours: "Program: Luni - Duminică: 18:00 - 22:00",
       rights: "Toate drepturile rezervate.",
     },
+    social: {
+      seeRealRepairs: "Vezi videoclipuri reale de reparații pe:",
+      needQuickService: "Ai nevoie de serviciu rapid?",
+      callNow: "Sună-ne acum sau programează online pentru un răspuns rapid!"
+    },
   },
   ar: {
     navbar: {
@@ -336,7 +346,7 @@ export const translations = {
       subtitle: "نقدم خدمات إصلاح وصيانة كاملة للإلكترونيات وأنظمة تكييف الهواء.",
       tv: {
         title: "إصلاح التلفزيون",
-        description: "نقوم بإصلاح جميع أنواع تلفزيونات LED و LCD والتلفزيونات الذكية.",
+        description: "نقوم بإصلاح جميع أنواع أجهزة التلفزيون LED و LCD و Smart TV.",
       },
       acCleaning: {
         title: "تنظيف المكيف",
@@ -348,7 +358,7 @@ export const translations = {
       },
       freon: {
         title: "فحص الفريون",
-        description: "اختبار وإعادة تعبئة الفريون للأداء الأمثل.",
+        description: "اختبار وإعادة تعبئة الفريون لأداء مثالي.",
       },
       details: "التفاصيل والأسعار",
       book: "احجز الآن",
@@ -407,6 +417,11 @@ export const translations = {
       email: "البريد الإلكتروني: contact@repairmaster.ro",
       hours: "ساعات العمل: الاثنين - الأحد: 18:00 - 22:00",
       rights: "جميع الحقوق محفوظة.",
+    },
+    social: {
+      seeRealRepairs: "شاهد عملنا الاحترافي",
+      needQuickService: "هل تحتاج إلى خدمة سريعة؟",
+      callNow: "اتصل بنا الآن أو احجز عبر الإنترنت للحصول على استجابة سريعة!"
     },
   },
 }

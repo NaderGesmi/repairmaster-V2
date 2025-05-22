@@ -1010,48 +1010,7 @@
         <div class="flex flex-col items-center justify-center space-y-4 text-center">
           <h2 class="text-3xl font-bold" data-lang="contact.title">Contact & Booking</h2>
         </div>
-        <div class="mx-auto max-w-lg mt-8">
-          <form class="grid gap-6">
-            <div class="grid gap-2">
-              <label for="name" class="label" data-lang="contact.name">Name</label>
-              <input id="name" type="text" class="input" placeholder="Your name" data-lang-attr="placeholder:contact.namePlaceholder">
-            </div>
-            <div class="grid gap-2">
-              <label for="email" class="label" data-lang="contact.email">Email</label>
-              <input id="email" type="email" class="input" placeholder="your.email@example.com" data-lang-attr="placeholder:contact.emailPlaceholder">
-            </div>
-            <div class="grid gap-2">
-              <label for="phone" class="label" data-lang="contact.phone">Phone</label>
-              <input id="phone" type="tel" class="input" placeholder="Your phone number" data-lang-attr="placeholder:contact.phonePlaceholder">
-            </div>
-            <div class="grid gap-2">
-              <label for="date" class="label" data-lang="contact.date">Booking Date</label>
-              <input id="date" type="date" class="input">
-            </div>
-            <div class="grid gap-2">
-              <label for="time" class="label" data-lang="contact.time">Time Slot</label>
-              <select id="time" class="select" data-lang-attr="placeholder:contact.selectTime">
-                <option value="" disabled selected data-lang="contact.selectTime">Select a time</option>
-                <option value="09:00">09:00 AM</option>
-                <option value="10:00">10:00 AM</option>
-                <option value="11:00">11:00 AM</option>
-                <option value="12:00">12:00 PM</option>
-                <option value="13:00">01:00 PM</option>
-                <option value="14:00">02:00 PM</option>
-                <option value="15:00">03:00 PM</option>
-                <option value="16:00">04:00 PM</option>
-                <option value="17:00">05:00 PM</option>
-                <option value="18:00">06:00 PM</option>
-                <option value="19:00">07:00 PM</option>
-              </select>
-            </div>
-            <div class="grid gap-2">
-              <label for="message" class="label" data-lang="contact.message">Message</label>
-              <textarea id="message" class="textarea" placeholder="Tell us about your repair needs" data-lang-attr="placeholder:contact.messagePlaceholder"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary" data-lang="contact.submit">Send & Book</button>
-          </form>
-        </div>
+        <div id="contact-form-container"></div>
       </div>
     </section>
   </main>
@@ -1537,10 +1496,6 @@
       // Update icons
       lightIcons.forEach(icon => {
         icon.style.display = isDarkMode ? 'none' : 'inline-block';
-      });
-      
-      darkIcons.forEach(icon => {
-        icon.style.display =  : 'inline-block';
       });
       
       darkIcons.forEach(icon => {
