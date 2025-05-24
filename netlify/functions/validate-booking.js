@@ -1,3 +1,6 @@
+require('tr46');
+require('whatwg-url');
+
 const { format, isBefore, isAfter, setHours, setMinutes, isWeekend, parseISO } = require('date-fns')
 const { zonedTimeToUtc, utcToZonedTime, formatInTimeZone } = require('date-fns-tz')
 const fetch = require('node-fetch')
