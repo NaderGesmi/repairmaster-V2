@@ -1,7 +1,7 @@
 [build]
   command = "pnpm install && pnpm run build"
-  # Set the publish directory to 'out' for static export
-  publish = "out"
+  # Set the publish directory to '.next' for static export
+  publish = ".next"
   # The Netlify Next.js plugin will still be active for other functionalities
 
 [functions]
