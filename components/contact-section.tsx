@@ -283,11 +283,6 @@ export function ContactSection() {
             <form
               name="booking"
               method="POST"
-<<<<<<< HEAD
-              action="/api/booking"
-              encType="application/x-www-form-urlencoded"
-=======
->>>>>>> rollback-netlify
               data-netlify="true"
               data-netlify-honeypot="bot-field"
               data-netlify-success={getRedirectPath()}
