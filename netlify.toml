@@ -9,10 +9,7 @@
   node_bundler = "esbuild"
 
 [[plugins]]
-  package = "@netlify/next"
-
-[[plugins]]
-  package = "@netlify/plugin-emails"
+  package = "@netlify/plugin-nextjs"
 
 # Your existing redirects and headers can remain below this
 # We will modify the main redirect to point to index.html
