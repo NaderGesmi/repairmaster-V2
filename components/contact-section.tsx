@@ -267,7 +267,6 @@ export function ContactSection() {
               method="POST"
               data-netlify="true" 
               data-netlify-honeypot="bot-field"
-              netlify="true"
               hidden
             >
               <input type="hidden" name="form-name" value="booking" />
@@ -286,7 +285,6 @@ export function ContactSection() {
               method="POST"
               data-netlify="true"
               data-netlify-honeypot="bot-field"
-              netlify="true"
               data-netlify-success={getRedirectPath()}
               onSubmit={handleSubmit}
               className="space-y-6"
