@@ -266,7 +266,8 @@ export function ContactSection() {
               name="booking" 
               method="POST"
               data-netlify="true" 
-              data-netlify-honeypot="bot-field" 
+              data-netlify-honeypot="bot-field"
+              netlify
               hidden
             >
               <input type="hidden" name="form-name" value="booking" />
@@ -285,10 +286,11 @@ export function ContactSection() {
               method="POST"
               data-netlify="true"
               data-netlify-honeypot="bot-field"
+              netlify
               data-netlify-success={getRedirectPath()}
               onSubmit={handleSubmit}
               className="space-y-6"
-              noValidate // Enable native browser validation
+              noValidate
             >
               <input type="hidden" name="form-name" value="booking" />
               <input type="hidden" name="bot-field" />
