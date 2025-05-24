@@ -1,5 +1,5 @@
 [build]
-  command = "pnpm install && pnpm run build"
+  command = "pnpm install && pnpm run build && pnpm run export"
   # Set the publish directory to 'out' for static export
   publish = "out"
   # The Netlify Next.js plugin will still be active for other functionalities
