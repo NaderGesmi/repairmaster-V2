@@ -19,6 +19,7 @@ const nextConfig = {
         hostname: 'utfs.io',
       },
     ],
+    unoptimized: true,
   },
   // Enable static exports for Netlify
   output: 'export',
