@@ -1,8 +1,21 @@
 [build]
   command = "pnpm install && pnpm run build"
-  # The Netlify Next.js plugin will detect that you are using static export
-  # and will automatically set the correct publish directory to 'out'
-  # We do not need to set publish = "out" manually here if using the plugin
+  # Set the publish directory to 'out' for static export
+  publish = "out"
+  # The Netlify Next.js plugin will still be active for other functionalities
+
+  environment = {
+    NEXT_TELEMETRY_DISABLED = "1"
+    NODE_VERSION = "18"
+    NEXT_USE_NETLIFY_EDGE = "true"
+    NETLIFY_NEXT_PLUGIN_SKIP = "true"
+    PNPM_VERSION = "8.15.5"
+    # Make sure to add your specific environment variables here again if they were only in the removed block
+    GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec"
+    NETLIFY_EMAILS_DIRECTORY = "./emails"
+    NETLIFY_EMAILS_SECRET = "YOUR_EMAIL_SECRET"
+    TZ = "UTC"
+  }
 
 [functions]
   included_files = ["next.config.js"]
@@ -13,20 +26,12 @@
 [[plugins]]
   package = "@netlify/plugin-emails"
 
-[build.environment]
-  NEXT_TELEMETRY_DISABLED = "1"
-  NODE_VERSION = "18"
-  NEXT_USE_NETLIFY_EDGE = "true"
-  NETLIFY_NEXT_PLUGIN_SKIP = "true"
-  PNPM_VERSION = "8.15.5"
-  GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec"
-  NETLIFY_EMAILS_DIRECTORY = "./emails"
-  NETLIFY_EMAILS_SECRET = "YOUR_EMAIL_SECRET"
-  TZ = "UTC"
+# Your existing redirects and headers can remain below this
+# We will modify the main redirect to point to index.html
 
 [[redirects]]
   from = "/*"
-  to = "/.netlify/functions/next"
+  to = "/index.html"
   status = 200
   force = true
 
