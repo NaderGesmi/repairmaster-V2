@@ -1,6 +1,6 @@
 "use client"
 
-import { Tiktok, Instagram, Phone } from "lucide-react"
+import { Instagram, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/components/language-provider"
 
@@ -22,7 +22,7 @@ export function SocialCTA() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
               >
-                <Tiktok className="h-5 w-5" />
+                <span className="h-5 w-5">🎵</span>
                 <span>@repairversehub</span>
               </a>
               <a
