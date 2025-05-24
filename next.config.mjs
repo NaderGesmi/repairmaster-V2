@@ -9,6 +9,11 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  // Enable static exports for Netlify
+  output: 'export',
+  // Disable server-side features since we're using static export
+  trailingSlash: true,
+  distDir: '.next',
 }
 
 export default nextConfig
