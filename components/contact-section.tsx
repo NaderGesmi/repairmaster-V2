@@ -9,7 +9,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { format } from "date-fns"
+import { format, isBefore, isAfter, setHours, setMinutes, isWeekend, parseISO } from "date-fns"
+import { formatInTimeZone } from "date-fns-tz"
 import { 
   CalendarIcon, 
   Loader2, 
@@ -38,7 +39,49 @@ export function ContactSection() {
   const [formStatus, setFormStatus] = useState<"idle" | "success" | "error">("idle")
   const [errors, setErrors] = useState<Record<string, string>>({})
 
+  const timeZone = "Europe/Bucharest"
+
+  // Get current timezone offset
+  const getTimezoneOffset = () => {
+    const now = new Date()
+    const bucharestTime = formatInTimeZone(now, timeZone, 'HH:mm')
+    const userTime = formatInTimeZone(now, Intl.DateTimeFormat().resolvedOptions().timeZone, 'HH:mm')
+    
+    const [bucharestHours, bucharestMinutes] = bucharestTime.split(':').map(Number)
+    const [userHours, userMinutes] = userTime.split(':').map(Number)
+    
+    const bucharestTotalMinutes = bucharestHours * 60 + bucharestMinutes
+    const userTotalMinutes = userHours * 60 + userMinutes
+    
+    return Math.round((bucharestTotalMinutes - userTotalMinutes) / 60)
+  }
+
+  // Format time in Bucharest timezone
+  const formatBucharestTime = (date: Date) => {
+    return formatInTimeZone(date, timeZone, 'HH:mm')
+  }
+
+  // Get timezone warning message
+  const getTimezoneWarning = () => {
+    const offset = getTimezoneOffset()
+    if (offset === 0) return null
+    
+    const direction = offset > 0 ? 'ahead' : 'behind'
+    const hours = Math.abs(offset)
+    return `All times shown in Bucharest time (EET/EEST). Your local time is ${hours} hour${hours !== 1 ? 's' : ''} ${direction}.`
+  }
+
   const timeSlots = [
+    "06:00 PM",
+    "07:00 PM",
+    "08:00 PM",
+    "09:00 PM",
+    "10:00 PM",
+    "11:00 PM"
+  ]
+
+  const weekendTimeSlots = [
+    "08:00 AM",
     "09:00 AM",
     "10:00 AM",
     "11:00 AM",
@@ -50,7 +93,57 @@ export function ContactSection() {
     "05:00 PM",
     "06:00 PM",
     "07:00 PM",
+    "08:00 PM",
+    "09:00 PM",
+    "10:00 PM",
+    "11:00 PM"
   ]
+
+  const getAvailableTimeSlots = (selectedDate: Date | undefined) => {
+    if (!selectedDate) return timeSlots
+    return isWeekend(selectedDate) ? weekendTimeSlots : timeSlots
+  }
+
+  const validateTimeSlot = (selectedDate: Date, selectedTime: string) => {
+    // Convert selected time to 24-hour format
+    const [time, period] = selectedTime.split(" ")
+    let [hours, minutes] = time.split(":").map(Number)
+    if (period === "PM" && hours !== 12) hours += 12
+    if (period === "AM" && hours === 12) hours = 0
+
+    // Create date object in user's timezone
+    const selectedDateTime = setMinutes(setHours(selectedDate, hours), minutes)
+    
+    // Get current time in Bucharest
+    const now = new Date()
+    
+    // Format both dates in Bucharest timezone for comparison
+    const selectedTimeBucharest = formatInTimeZone(selectedDateTime, timeZone, 'HH:mm')
+    const currentTimeBucharest = formatInTimeZone(now, timeZone, 'HH:mm')
+    
+    // Check if date is in the past
+    if (isBefore(selectedDateTime, now)) {
+      return "Past dates and times are not allowed"
+    }
+
+    // Get hours in Bucharest timezone
+    const [bucharestHours] = selectedTimeBucharest.split(':').map(Number)
+
+    // Check weekday vs weekend hours
+    if (isWeekend(selectedDateTime)) {
+      // Weekend hours: 08:00-23:00
+      if (bucharestHours < 8 || bucharestHours >= 23) {
+        return "Weekend hours are 08:00-23:00"
+      }
+    } else {
+      // Weekday hours: 18:00-23:00
+      if (bucharestHours < 18 || bucharestHours >= 23) {
+        return "Weekday hours are 18:00-23:00"
+      }
+    }
+
+    return null
+  }
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {}
@@ -61,6 +154,10 @@ export function ContactSection() {
     if (!phone.trim()) newErrors.phone = t("contact.errors.phoneRequired")
     if (!date) newErrors.date = t("contact.errors.dateRequired")
     if (!time) newErrors.time = t("contact.errors.timeRequired")
+    else if (date) {
+      const timeError = validateTimeSlot(date, time)
+      if (timeError) newErrors.time = timeError
+    }
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
@@ -73,9 +170,49 @@ export function ContactSection() {
 
     setIsSubmitting(true)
     setFormStatus("idle")
+    setErrors({}) // Clear previous errors
 
     try {
-      // The form will be handled by Netlify Forms
+      // Validate with Netlify Function first
+      const validationResponse = await fetch('/.netlify/functions/validate-booking', {
+        method: 'POST',
+        body: JSON.stringify({
+          'form-name': 'booking',
+          date: date ? format(date, "yyyy-MM-dd") : "",
+          time,
+          name,
+          email,
+          phone,
+          message
+        }),
+      })
+
+      const validationResult = await validationResponse.json()
+
+      if (!validationResponse.ok) {
+        if (validationResult.error === 'invalid_time_slot' || validationResult.error === 'past_booking') {
+          setErrors(prev => ({
+            ...prev,
+            time: validationResult.message
+          }))
+          setFormStatus("error")
+          return
+        }
+        throw new Error(validationResult.message || 'Validation failed')
+      }
+
+      // If validation passes, submit the form
+      const form = e.target as HTMLFormElement
+      const formData = new FormData(form)
+      
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData as any).toString(),
+      })
+
+      if (!response.ok) throw new Error('Form submission failed')
+
       setFormStatus("success")
 
       // Reset form
@@ -87,6 +224,10 @@ export function ContactSection() {
       setMessage("")
     } catch (error) {
       setFormStatus("error")
+      setErrors(prev => ({
+        ...prev,
+        submit: error instanceof Error ? error.message : 'An error occurred while submitting the form'
+      }))
     } finally {
       setIsSubmitting(false)
     }
@@ -111,6 +252,11 @@ export function ContactSection() {
           <p className="text-muted-foreground max-w-[600px]">
             {t("contact.subtitle")}
           </p>
+          {getTimezoneWarning() && (
+            <p className="text-sm text-amber-600 dark:text-amber-400">
+              {getTimezoneWarning()}
+            </p>
+          )}
         </div>
 
         <div className="grid gap-8 md:grid-cols-2 mt-12">
@@ -142,23 +288,10 @@ export function ContactSection() {
               data-netlify-success={getRedirectPath()}
               onSubmit={handleSubmit}
               className="space-y-6"
+              noValidate // Enable native browser validation
             >
               <input type="hidden" name="form-name" value="booking" />
               <input type="hidden" name="bot-field" />
-
-              {formStatus === "success" && (
-                <div className="p-4 bg-green-50 border border-green-200 rounded-lg text-green-700">
-                  <p className="font-medium">{t("contact.toast.success.title")}</p>
-                  <p className="text-sm">{t("contact.toast.success.description")}</p>
-                </div>
-              )}
-
-              {formStatus === "error" && (
-                <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
-                  <p className="font-medium">{t("contact.toast.error.title")}</p>
-                  <p className="text-sm">{t("contact.toast.error.description")}</p>
-                </div>
-              )}
 
               <div className="space-y-4">
                 <div className="flex items-center space-x-3 rtl:space-x-reverse">
@@ -239,6 +372,7 @@ export function ContactSection() {
                       selected={date}
                       onSelect={setDate}
                       initialFocus
+                      disabled={(date) => isBefore(date, new Date())}
                     />
                   </PopoverContent>
                 </Popover>
@@ -256,7 +390,7 @@ export function ContactSection() {
                     <SelectValue placeholder={t("contact.selectTime")} />
                   </SelectTrigger>
                   <SelectContent className="z-50">
-                    {timeSlots.map((slot) => (
+                    {getAvailableTimeSlots(date).map((slot) => (
                       <SelectItem key={slot} value={slot}>
                         {slot}
                       </SelectItem>
@@ -282,7 +416,7 @@ export function ContactSection() {
                 />
               </div>
 
-              <div>
+              <div className="space-y-4">
                 <Button
                   type="submit"
                   className="w-full"
@@ -300,6 +434,32 @@ export function ContactSection() {
                     </>
                   )}
                 </Button>
+
+                {/* Error messages */}
+                {Object.entries(errors).map(([field, message]) => (
+                  <p 
+                    key={field} 
+                    className="text-sm text-destructive dark:text-red-400"
+                    role="alert"
+                  >
+                    {message}
+                  </p>
+                ))}
+
+                {/* Form status messages */}
+                {formStatus === "success" && (
+                  <div className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg text-green-700 dark:text-green-400">
+                    <p className="font-medium">{t("contact.toast.success.title")}</p>
+                    <p className="text-sm">{t("contact.toast.success.description")}</p>
+                  </div>
+                )}
+
+                {formStatus === "error" && (
+                  <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-700 dark:text-red-400">
+                    <p className="font-medium">{t("contact.toast.error.title")}</p>
+                    <p className="text-sm">{t("contact.toast.error.description")}</p>
+                  </div>
+                )}
               </div>
             </form>
           </div>
