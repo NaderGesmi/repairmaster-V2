@@ -14,6 +14,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'utfs.io',
       },
+      {
+        protocol: 'https',
+        hostname: 'hebbkx1anhila5yf.public.blob.vercel-storage.com',
+      }
     ],
   },
   // Remove static export configuration
