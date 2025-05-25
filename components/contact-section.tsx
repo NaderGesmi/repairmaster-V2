@@ -2,7 +2,7 @@
 
 import { useLanguage } from "@/components/language-provider"
 import { motion } from "framer-motion"
-import { BookingForm } from "./booking-form"
+import BookingForm from "./booking-form"
 import { Tv, Wind, Thermometer, Wrench, Phone, MessageSquare, Mail } from "lucide-react"
 
 export function ContactSection() {
