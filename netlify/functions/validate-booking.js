@@ -152,87 +152,54 @@ exports.handler = async function(event, context) {
   }
 
   try {
-    // Parse the request body
     const data = JSON.parse(event.body)
-    
-    // Check if this is a booking form submission
-    if (data['form-name'] !== 'booking') {
-      return {
-        statusCode: 400,
-        headers,
-        body: JSON.stringify({ error: 'Invalid form name' })
-      }
-    }
-    
-    // Validate required fields
-    if (!data.date || !data.time || !data.name || !data.email || !data.phone) {
-      return {
-        statusCode: 400,
-        headers,
-        body: JSON.stringify({ 
-          error: 'missing_fields',
-          message: 'All fields are required'
-        })
-      }
-    }
-    
-    // Validate the time slot
-    const validationError = validateTimeSlot(data.date, data.time)
-    
-    if (validationError) {
-      return {
-        statusCode: 400,
-        headers,
-        body: JSON.stringify(validationError)
-      }
-    }
+    const { bookingTime, cost } = data
 
-    // Forward to Google Apps Script
-    const scriptResponse = await fetch(GOOGLE_SCRIPT_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: data.name,
-        email: data.email,
-        phone: data.phone,
-        date: data.date,
-        time: data.time
-      })
-    })
+    // Debug logs
+    console.log('Received bookingTime:', bookingTime)
+    const parsedTime = new Date(bookingTime)
+    console.log('Parsed time:', parsedTime)
+    console.log('Received cost:', cost, 'Type:', typeof cost)
 
-    const scriptResult = await scriptResponse.json()
-
-    if (!scriptResponse.ok) {
+    // Validate bookingTime
+    if (!bookingTime || isNaN(parsedTime.getTime())) {
       return {
         statusCode: 400,
         headers,
         body: JSON.stringify({
-          error: 'booking_failed',
-          message: scriptResult.message || 'Failed to save booking'
+          error: 'validation_error',
+          message: 'Invalid booking time format. Use ISO string.'
         })
       }
     }
-    
-    // If everything passes, return success
+
+    // Validate cost
+    if (typeof cost !== 'number' || cost <= 0) {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({
+          error: 'validation_error',
+          message: 'Invalid cost. Must be a positive number.'
+        })
+      }
+    }
+
+    // Convert to timezone (e.g., Europe/Bucharest)
+    const zonedTime = utcToZonedTime(parsedTime, TIMEZONE)
+
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify({ 
-        success: true,
-        message: 'Booking confirmed successfully'
-      })
+      body: JSON.stringify({ success: true, zonedTime })
     }
-    
   } catch (error) {
     return {
-      statusCode: 500,
+      statusCode: 400,
       headers,
-      body: JSON.stringify({ 
-        error: 'server_error',
-        message: 'Internal server error',
-        details: error.message
+      body: JSON.stringify({
+        error: 'validation_error',
+        message: error.message
       })
     }
   }
