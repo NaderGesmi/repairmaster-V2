@@ -13,39 +13,39 @@ export function GallerySection() {
       alt: "TV Repair Service"
     },
     {
-      src: "/images/gallery/tv (2).jpg",
+      src: "/images/gallery/tv-2.jpg",
       alt: "TV Repair Service"
     },
     {
-      src: "/images/gallery/ac 2.jpg",
+      src: "/images/gallery/ac-2.jpg",
       alt: "AC Installation Service"
     },
     {
-      src: "/images/gallery/ac 3.jpg",
+      src: "/images/gallery/ac-3.jpg",
       alt: "AC Cleaning Service"
     },
     {
-      src: "/images/gallery/ac 4.jpg",
+      src: "/images/gallery/ac-4.jpg",
       alt: "AC Maintenance Service"
     },
     {
-      src: "/images/gallery/ac 5.jpg",
+      src: "/images/gallery/ac-5.jpg",
       alt: "AC Service"
     },
     {
-      src: "/images/gallery/air condiitoner .jpg",
+      src: "/images/gallery/air-conditioner.jpg",
       alt: "Air Conditioner Service"
     },
     {
-      src: "/images/gallery/backlight defected.jpg",
+      src: "/images/gallery/backlight-defected.jpg",
       alt: "TV Backlight Repair"
     },
     {
-      src: "/images/gallery/backlight lighthing.jpg",
+      src: "/images/gallery/backlight-lighting.jpg",
       alt: "TV Backlight Service"
     },
     {
-      src: "/images/gallery/Board.jpg",
+      src: "/images/gallery/board.jpg",
       alt: "Circuit Board Repair"
     },
     {
