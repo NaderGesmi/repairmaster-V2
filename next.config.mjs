@@ -10,6 +10,7 @@ const nextConfig = {
   },
   images: {
     domains: ['res.cloudinary.com'], // allow Cloudinary domain
+    unoptimized: true, // disable Next.js image optimization for Netlify compatibility
   },
 }
 

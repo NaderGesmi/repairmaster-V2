@@ -49,7 +49,7 @@ export function HeroSection() {
           >
             <div className="relative w-full max-w-md aspect-video rounded-xl overflow-hidden shadow-xl">
               <Image
-                src="https://res.cloudinary.com/katakuri740/image/upload/v1748195230/dkbpw2byabqk306ckpeb.jpg"
+                src="https://res.cloudinary.com/katakuri740/image/upload/w_1200,q_75/v1748195230/dkbpw2byabqk306ckpeb.jpg"
                 alt={t("hero.imageAlt")}
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"

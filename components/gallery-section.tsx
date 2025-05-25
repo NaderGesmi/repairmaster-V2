@@ -9,51 +9,51 @@ export function GallerySection() {
 
   const galleryImages = [
     {
-      src: "https://res.cloudinary.com/katakuri740/image/upload/v1748181373/gallery/gkhamomq3p3m5cw5sct8.jpg",
+      src: "https://res.cloudinary.com/katakuri740/image/upload/w_800,q_75/v1748181373/gallery/gkhamomq3p3m5cw5sct8.jpg",
       alt: "Gallery Image 1"
     },
     {
-      src: "https://res.cloudinary.com/katakuri740/image/upload/v1748181372/gallery/fxejsw5in7fcxin6seqw.jpg",
+      src: "https://res.cloudinary.com/katakuri740/image/upload/w_800,q_75/v1748181372/gallery/fxejsw5in7fcxin6seqw.jpg",
       alt: "Gallery Image 2"
     },
     {
-      src: "https://res.cloudinary.com/katakuri740/image/upload/v1748181372/gallery/hfnkrju22tlycx2gewkg.jpg",
+      src: "https://res.cloudinary.com/katakuri740/image/upload/w_800,q_75/v1748181372/gallery/hfnkrju22tlycx2gewkg.jpg",
       alt: "Gallery Image 3"
     },
     {
-      src: "https://res.cloudinary.com/katakuri740/image/upload/v1748181372/gallery/csgc6tbblkjawx36kza8.jpg",
+      src: "https://res.cloudinary.com/katakuri740/image/upload/w_800,q_75/v1748181372/gallery/csgc6tbblkjawx36kza8.jpg",
       alt: "Gallery Image 4"
     },
     {
-      src: "https://res.cloudinary.com/katakuri740/image/upload/v1748181371/gallery/ko3olmn0mg3kbxk2mfoz.jpg",
+      src: "https://res.cloudinary.com/katakuri740/image/upload/w_800,q_75/v1748181371/gallery/ko3olmn0mg3kbxk2mfoz.jpg",
       alt: "Gallery Image 5"
     },
     {
-      src: "https://res.cloudinary.com/katakuri740/image/upload/v1748181371/gallery/wxk5eovzimpwliqzfrcm.jpg",
+      src: "https://res.cloudinary.com/katakuri740/image/upload/w_800,q_75/v1748181371/gallery/wxk5eovzimpwliqzfrcm.jpg",
       alt: "Gallery Image 6"
     },
     {
-      src: "https://res.cloudinary.com/katakuri740/image/upload/v1748181371/gallery/bp7sl1ht5scdl1m11rhm.jpg",
+      src: "https://res.cloudinary.com/katakuri740/image/upload/w_800,q_75/v1748181371/gallery/bp7sl1ht5scdl1m11rhm.jpg",
       alt: "Gallery Image 7"
     },
     {
-      src: "https://res.cloudinary.com/katakuri740/image/upload/v1748181371/gallery/rdmmmlany4gq7qrbzuva.jpg",
+      src: "https://res.cloudinary.com/katakuri740/image/upload/w_800,q_75/v1748181371/gallery/rdmmmlany4gq7qrbzuva.jpg",
       alt: "Gallery Image 8"
     },
     {
-      src: "https://res.cloudinary.com/katakuri740/image/upload/v1748181371/gallery/rdmmmlany4gq7qrbzuva.jpg",
+      src: "https://res.cloudinary.com/katakuri740/image/upload/w_800,q_75/v1748181371/gallery/rdmmmlany4gq7qrbzuva.jpg",
       alt: "Gallery Image 9"
     },
     {
-      src: "https://res.cloudinary.com/katakuri740/image/upload/v1748181371/gallery/qg8znyqw19piexxnpasc.jpg",
+      src: "https://res.cloudinary.com/katakuri740/image/upload/w_800,q_75/v1748181371/gallery/qg8znyqw19piexxnpasc.jpg",
       alt: "Gallery Image 10"
     },
     {
-      src: "https://res.cloudinary.com/katakuri740/image/upload/v1748181371/gallery/oedzdocydwu0hpjlukam.jpg",
+      src: "https://res.cloudinary.com/katakuri740/image/upload/w_800,q_75/v1748181371/gallery/oedzdocydwu0hpjlukam.jpg",
       alt: "Gallery Image 11"
     },
     {
-      src: "https://res.cloudinary.com/katakuri740/image/upload/v1748181371/gallery/vhesqfsv20dkkxqo9r44.jpg",
+      src: "https://res.cloudinary.com/katakuri740/image/upload/w_800,q_75/v1748181371/gallery/vhesqfsv20dkkxqo9r44.jpg",
       alt: "Gallery Image 12"
     }
   ]
