@@ -18,13 +18,20 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<Language>("ro")
   const [dir, setDir] = useState<Direction>("ltr")
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    // Set direction based on language
-    setDir(language === "ar" ? "rtl" : "ltr")
-    document.documentElement.dir = language === "ar" ? "rtl" : "ltr"
-    document.documentElement.lang = language
-  }, [language])
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (mounted) {
+      // Set direction based on language
+      setDir(language === "ar" ? "rtl" : "ltr")
+      document.documentElement.dir = language === "ar" ? "rtl" : "ltr"
+      document.documentElement.lang = language
+    }
+  }, [language, mounted])
 
   const t = (key: string) => {
     const keys = key.split(".")

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useLanguage } from "@/components/language-provider"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -38,23 +38,28 @@ export function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [formStatus, setFormStatus] = useState<"idle" | "success" | "error">("idle")
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [timezoneOffset, setTimezoneOffset] = useState<number | null>(null)
 
   const timeZone = "Europe/Bucharest"
 
-  // Get current timezone offset
-  const getTimezoneOffset = () => {
-    const now = new Date()
-    const bucharestTime = formatInTimeZone(now, timeZone, 'HH:mm')
-    const userTime = formatInTimeZone(now, Intl.DateTimeFormat().resolvedOptions().timeZone, 'HH:mm')
-    
-    const [bucharestHours, bucharestMinutes] = bucharestTime.split(':').map(Number)
-    const [userHours, userMinutes] = userTime.split(':').map(Number)
-    
-    const bucharestTotalMinutes = bucharestHours * 60 + bucharestMinutes
-    const userTotalMinutes = userHours * 60 + userMinutes
-    
-    return Math.round((bucharestTotalMinutes - userTotalMinutes) / 60)
-  }
+  useEffect(() => {
+    // Get current timezone offset
+    const getTimezoneOffset = () => {
+      const now = new Date()
+      const bucharestTime = formatInTimeZone(now, timeZone, 'HH:mm')
+      const userTime = formatInTimeZone(now, Intl.DateTimeFormat().resolvedOptions().timeZone, 'HH:mm')
+      
+      const [bucharestHours, bucharestMinutes] = bucharestTime.split(':').map(Number)
+      const [userHours, userMinutes] = userTime.split(':').map(Number)
+      
+      const bucharestTotalMinutes = bucharestHours * 60 + bucharestMinutes
+      const userTotalMinutes = userHours * 60 + userMinutes
+      
+      return Math.round((bucharestTotalMinutes - userTotalMinutes) / 60)
+    }
+
+    setTimezoneOffset(getTimezoneOffset())
+  }, [])
 
   // Format time in Bucharest timezone
   const formatBucharestTime = (date: Date) => {
@@ -63,7 +68,9 @@ export function ContactSection() {
 
   // Get timezone warning message
   const getTimezoneWarning = () => {
-    const offset = getTimezoneOffset()
+    if (timezoneOffset === null) return null
+    
+    const offset = timezoneOffset
     if (offset === 0) return null
     
     const direction = offset > 0 ? 'ahead' : 'behind'

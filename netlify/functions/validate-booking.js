@@ -93,10 +93,27 @@ function validateTimeSlot(date, time) {
 }
 
 exports.handler = async function(event, context) {
+  // Set CORS headers
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS'
+  }
+
+  // Handle preflight requests
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers,
+      body: ''
+    }
+  }
+
   // Only allow POST requests
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
+      headers,
       body: JSON.stringify({ error: 'Method not allowed' })
     }
   }
@@ -109,6 +126,7 @@ exports.handler = async function(event, context) {
     if (data['form-name'] !== 'booking') {
       return {
         statusCode: 400,
+        headers,
         body: JSON.stringify({ error: 'Invalid form name' })
       }
     }
@@ -117,6 +135,7 @@ exports.handler = async function(event, context) {
     if (!data.date || !data.time || !data.name || !data.email || !data.phone) {
       return {
         statusCode: 400,
+        headers,
         body: JSON.stringify({ 
           error: 'missing_fields',
           message: 'All fields are required'
@@ -130,6 +149,7 @@ exports.handler = async function(event, context) {
     if (validationError) {
       return {
         statusCode: 400,
+        headers,
         body: JSON.stringify(validationError)
       }
     }
@@ -154,6 +174,7 @@ exports.handler = async function(event, context) {
     if (!scriptResponse.ok) {
       return {
         statusCode: 400,
+        headers,
         body: JSON.stringify({
           error: 'booking_failed',
           message: scriptResult.message || 'Failed to save booking'
@@ -164,6 +185,7 @@ exports.handler = async function(event, context) {
     // If everything passes, return success
     return {
       statusCode: 200,
+      headers,
       body: JSON.stringify({ 
         success: true,
         message: 'Booking confirmed successfully'
@@ -173,6 +195,7 @@ exports.handler = async function(event, context) {
   } catch (error) {
     return {
       statusCode: 500,
+      headers,
       body: JSON.stringify({ 
         error: 'server_error',
         message: 'Internal server error',
