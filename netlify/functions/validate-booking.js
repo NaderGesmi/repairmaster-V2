@@ -153,13 +153,12 @@ exports.handler = async function(event, context) {
 
   try {
     const data = JSON.parse(event.body)
-    const { bookingTime, cost } = data
+    const { bookingTime, name, email, phone, message } = data
 
     // Debug logs
     console.log('Received bookingTime:', bookingTime)
     const parsedTime = new Date(bookingTime)
     console.log('Parsed time:', parsedTime)
-    console.log('Received cost:', cost, 'Type:', typeof cost)
 
     // Validate bookingTime
     if (!bookingTime || isNaN(parsedTime.getTime())) {
@@ -173,27 +172,63 @@ exports.handler = async function(event, context) {
       }
     }
 
-    // Validate cost
-    if (typeof cost !== 'number' || cost <= 0) {
-      return {
-        statusCode: 400,
-        headers,
-        body: JSON.stringify({
-          error: 'validation_error',
-          message: 'Invalid cost. Must be a positive number.'
-        })
+    // Convert to Bucharest timezone
+    const zonedTime = utcToZonedTime(parsedTime, TIMEZONE)
+    console.log('Zoned time:', zonedTime)
+
+    // Get hours in Bucharest timezone
+    const hours = zonedTime.getHours()
+
+    // Check weekday vs weekend hours
+    if (isWeekend(zonedTime)) {
+      // Weekend hours: 08:00-23:00
+      if (hours < 8 || hours >= 23) {
+        return {
+          statusCode: 400,
+          headers,
+          body: JSON.stringify({
+            error: 'invalid_time_slot',
+            message: 'Weekend hours are 08:00-23:00',
+            details: {
+              selected: formatTimeInBucharest(zonedTime),
+              allowed: '08:00-23:00'
+            }
+          })
+        }
+      }
+    } else {
+      // Weekday hours: 18:00-23:00
+      if (hours < 18 || hours >= 23) {
+        return {
+          statusCode: 400,
+          headers,
+          body: JSON.stringify({
+            error: 'invalid_time_slot',
+            message: 'Weekday hours are 18:00-23:00',
+            details: {
+              selected: formatTimeInBucharest(zonedTime),
+              allowed: '18:00-23:00'
+            }
+          })
+        }
       }
     }
 
-    // Convert to timezone (e.g., Europe/Bucharest)
-    const zonedTime = utcToZonedTime(parsedTime, TIMEZONE)
-
+    // If validation passes, return success
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify({ success: true, zonedTime })
+      body: JSON.stringify({ 
+        success: true,
+        message: 'Booking time is valid',
+        details: {
+          bookingTime: bookingTime,
+          zonedTime: formatTimeInBucharest(zonedTime)
+        }
+      })
     }
   } catch (error) {
+    console.error('Validation error:', error)
     return {
       statusCode: 400,
       headers,

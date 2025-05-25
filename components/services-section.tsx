@@ -3,7 +3,7 @@
 import { useLanguage } from "@/components/language-provider"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter } from "@/components/ui/card"
-import { Tv, Wind, Thermometer, Wrench } from "lucide-react"
+import { Tv, Wind, Thermometer, Wrench, Settings, Shield } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { motion } from "framer-motion"
@@ -16,28 +16,37 @@ export function ServicesSection() {
       icon: <Tv className="h-10 w-10 text-primary" />,
       title: t("services.tv.title"),
       description: t("services.tv.description"),
-      image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/tv-repair.jpg-N1XAJlrIFBBbAsFuNBNZm3UM0SvCQ7.jpeg",
+      image: "/images/tv-repair.jpg",
     },
     {
       icon: <Wind className="h-10 w-10 text-primary" />,
       title: t("services.acCleaning.title"),
       description: t("services.acCleaning.description"),
-      image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ac-cleaning.jpg-irDiDR6N9ufZzPQn9iJAePVbvUI9Dn.jpeg",
+      image: "/images/ac-cleaning.jpg",
     },
     {
       icon: <Thermometer className="h-10 w-10 text-primary" />,
       title: t("services.acInstallation.title"),
       description: t("services.acInstallation.description"),
-      image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ac-install.jpg-1xG3XS2via4d8r81AZFhk9HLaAfm3B.jpeg",
+      image: "/images/ac-install.jpg",
     },
     {
       icon: <Wrench className="h-10 w-10 text-primary" />,
       title: t("services.freon.title"),
       description: t("services.freon.description"),
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/freon.jpg-L1D9LsAwzSX4Duuu4996tiQxCjHKA2.jpeg",
+      image: "/images/freon.jpg",
+    },
+    {
+      icon: <Settings className="h-10 w-10 text-primary" />,
+      title: "AC Repair",
+      description: "Comprehensive repair services for all types of air conditioners.",
+      image: "/images/ac-repair.jpg",
+    },
+    {
+      icon: <Shield className="h-10 w-10 text-primary" />,
+      title: t("footer.services.diagnostics"),
+      description: "Thorough diagnostics to identify and fix issues.",
+      image: "/images/diagnostics.jpg",
     },
   ]
 

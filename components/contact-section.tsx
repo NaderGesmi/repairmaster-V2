@@ -180,23 +180,27 @@ export function ContactSection() {
     setErrors({}) // Clear previous errors
 
     try {
-      // Format date and time to ISO string (UTC)
+      // Convert date and time to ISO format
       let bookingTime = ""
       if (date && time) {
-        const [timeStr, period] = time.split(" ")
+        // Parse time (e.g., "11:00 AM")
+        const [timeStr, modifier] = time.split(" ")
         let [hours, minutes] = timeStr.split(":").map(Number)
-        if (period === "PM" && hours !== 12) hours += 12
-        if (period === "AM" && hours === 12) hours = 0
-        // Compose ISO string
-        const isoDate = format(date, "yyyy-MM-dd")
-        bookingTime = new Date(`${isoDate}T${hours.toString().padStart(2, '0')}:${minutes}:00`).toISOString()
-      }
+        
+        // Convert to 24-hour format
+        if (modifier === "PM" && hours < 12) hours += 12
+        if (modifier === "AM" && hours === 12) hours = 0
 
-      // Parse cost as number (example: from a cost input field)
-      // Replace this with your actual cost input state if needed
-      let cost = 100 // Default for demo; replace with your cost state/logic
-      // If you have a cost input, e.g. costInput, use:
-      // cost = parseFloat(costInput.replace(/[^0-9.]/g, ''))
+        // Create ISO string
+        const isoDate = format(date, "yyyy-MM-dd")
+        const isoTime = new Date(`${isoDate}T${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:00`)
+        bookingTime = isoTime.toISOString()
+
+        // Debug logs
+        console.log('Raw date:', date)
+        console.log('Raw time:', time)
+        console.log('ISO time:', bookingTime)
+      }
 
       // Validate with Netlify Function first
       const validationResponse = await fetch('/.netlify/functions/validate-booking', {
@@ -206,7 +210,6 @@ export function ContactSection() {
         },
         body: JSON.stringify({
           bookingTime,
-          cost,
           'form-name': 'booking',
           name,
           email,
