@@ -41,7 +41,7 @@ export function SocialCTA() {
               {t("social.needQuickService")}
             </p>
             <Button asChild>
-              <a href="tel:+40741318528" className="flex items-center gap-2">
+              <a href="tel:+40741318528" className={`flex items-center gap-2 ${dir === 'rtl' ? 'flex-row-reverse' : ''}`}>
                 <Phone className="h-4 w-4" />
                 <span>+40 741 318 528</span>
               </a>

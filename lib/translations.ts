@@ -136,6 +136,10 @@ export const translations = {
       needQuickService: "Need quick service?",
       callNow: "Call us now or book online for a quick response!"
     },
+    gallery: {
+      title: "Gallery",
+      subtitle: "See real repair photos",
+    },
   },
   ro: {
     navbar: {
@@ -277,6 +281,10 @@ export const translations = {
       needQuickService: "Ai nevoie de serviciu rapid?",
       callNow: "Sună-ne acum sau programează online pentru un răspuns rapid!"
     },
+    gallery: {
+      title: "Galerie",
+      subtitle: "Vezi exemple reale de reparații",
+    },
   },
   ar: {
     navbar: {
@@ -413,6 +421,10 @@ export const translations = {
       seeRealRepairs: "شاهد عملنا الاحترافي",
       needQuickService: "هل تحتاج إلى خدمة سريعة؟",
       callNow: "اتصل بنا الآن أو احجز عبر الإنترنت للحصول على استجابة سريعة!"
+    },
+    gallery: {
+      title: "معرض الصور",
+      subtitle: "صور من أعمالنا",
     },
   },
 } as const;

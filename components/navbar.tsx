@@ -35,6 +35,9 @@ export function Navbar() {
           <Link href="#services" className="text-sm font-medium transition-colors hover:text-primary">
             {t("navbar.services")}
           </Link>
+          <Link href="#gallery" className="text-sm font-medium transition-colors hover:text-primary">
+            {t("gallery.title")}
+          </Link>
           <Link href="#pricing" className="text-sm font-medium transition-colors hover:text-primary">
             {t("navbar.pricing")}
           </Link>
@@ -75,6 +78,13 @@ export function Navbar() {
               onClick={() => setIsMenuOpen(false)}
             >
               {t("navbar.services")}
+            </Link>
+            <Link
+              href="#gallery"
+              className="text-sm font-medium transition-colors hover:text-primary"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {t("gallery.title")}
             </Link>
             <Link
               href="#pricing"

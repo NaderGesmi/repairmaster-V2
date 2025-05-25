@@ -37,12 +37,6 @@ export function ServicesSection() {
       image: "/images/freon.jpg",
     },
     {
-      icon: <Settings className="h-10 w-10 text-primary" />,
-      title: "AC Repair",
-      description: "Comprehensive repair services for all types of air conditioners.",
-      image: "/images/ac-repair.jpg",
-    },
-    {
       icon: <Shield className="h-10 w-10 text-primary" />,
       title: t("footer.services.diagnostics"),
       description: "Thorough diagnostics to identify and fix issues.",
