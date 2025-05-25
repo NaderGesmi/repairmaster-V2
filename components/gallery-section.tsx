@@ -9,48 +9,52 @@ export function GallerySection() {
 
   const galleryImages = [
     {
-      src: "/images/gallery/tv.jpg",
-      alt: "TV Repair Service"
+      src: "https://res.cloudinary.com/katakuri740/image/upload/v1748181373/gallery/gkhamomq3p3m5cw5sct8.jpg",
+      alt: "Gallery Image 1"
     },
     {
-      src: "/images/gallery/tv-2.jpg",
-      alt: "TV Repair Service"
+      src: "https://res.cloudinary.com/katakuri740/image/upload/v1748181372/gallery/fxejsw5in7fcxin6seqw.jpg",
+      alt: "Gallery Image 2"
     },
     {
-      src: "/images/gallery/ac-2.jpg",
-      alt: "AC Installation Service"
+      src: "https://res.cloudinary.com/katakuri740/image/upload/v1748181372/gallery/hfnkrju22tlycx2gewkg.jpg",
+      alt: "Gallery Image 3"
     },
     {
-      src: "/images/gallery/ac-3.jpg",
-      alt: "AC Cleaning Service"
+      src: "https://res.cloudinary.com/katakuri740/image/upload/v1748181372/gallery/csgc6tbblkjawx36kza8.jpg",
+      alt: "Gallery Image 4"
     },
     {
-      src: "/images/gallery/ac-4.jpg",
-      alt: "AC Maintenance Service"
+      src: "https://res.cloudinary.com/katakuri740/image/upload/v1748181371/gallery/ko3olmn0mg3kbxk2mfoz.jpg",
+      alt: "Gallery Image 5"
     },
     {
-      src: "/images/gallery/ac-5.jpg",
-      alt: "AC Service"
+      src: "https://res.cloudinary.com/katakuri740/image/upload/v1748181371/gallery/wxk5eovzimpwliqzfrcm.jpg",
+      alt: "Gallery Image 6"
     },
     {
-      src: "/images/gallery/air-conditioner.jpg",
-      alt: "Air Conditioner Service"
+      src: "https://res.cloudinary.com/katakuri740/image/upload/v1748181371/gallery/bp7sl1ht5scdl1m11rhm.jpg",
+      alt: "Gallery Image 7"
     },
     {
-      src: "/images/gallery/backlight-defected.jpg",
-      alt: "TV Backlight Repair"
+      src: "https://res.cloudinary.com/katakuri740/image/upload/v1748181371/gallery/rdmmmlany4gq7qrbzuva.jpg",
+      alt: "Gallery Image 8"
     },
     {
-      src: "/images/gallery/backlight-lighting.jpg",
-      alt: "TV Backlight Service"
+      src: "https://res.cloudinary.com/katakuri740/image/upload/v1748181371/gallery/rdmmmlany4gq7qrbzuva.jpg", // Repeated URL based on user's list
+      alt: "Gallery Image 9"
     },
     {
-      src: "/images/gallery/board.jpg",
-      alt: "Circuit Board Repair"
+      src: "https://res.cloudinary.com/katakuri740/image/upload/v1748181371/gallery/qg8znyqw19piexxnpasc.jpg",
+      alt: "Gallery Image 10"
     },
     {
-      src: "/images/gallery/psu.jpg",
-      alt: "Power Supply Repair"
+      src: "https://res.cloudinary.com/katakuri740/image/upload/v1748181371/gallery/oedzdocydwu0hpjlukam.jpg",
+      alt: "Gallery Image 11"
+    },
+    {
+      src: "https://res.cloudinary.com/katakuri740/image/upload/v1748181371/gallery/vhesqfsv20dkkxqo9r44.jpg",
+      alt: "Gallery Image 12"
     }
   ]
 
