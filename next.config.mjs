@@ -15,6 +15,11 @@ const nextConfig = {
         hostname: 'res.cloudinary.com',
         pathname: '/katakuri740/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '/**',
+      }
     ],
     unoptimized: true,
   },
