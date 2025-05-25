@@ -52,7 +52,7 @@ export function HeroSection() {
           >
             <div className="relative w-full max-w-md aspect-video rounded-xl overflow-hidden shadow-xl">
               <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ac-install.jpg-1xG3XS2via4d8r81AZFhk9HLaAfm3B.jpeg"
+                src="https://res.cloudinary.com/katakuri740/image/upload/v1748195230/dkbpw2byabqk306ckpeb.jpg"
                 alt={t("hero.imageAlt")}
                 width={600}
                 height={400}
