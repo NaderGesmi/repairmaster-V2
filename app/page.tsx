@@ -8,7 +8,6 @@ import { SocialProof } from "@/components/social-proof"
 import { TrustSignals } from "@/components/trust-signals"
 import { FAQSection } from "@/components/faq-section"
 import { ValueProposition } from "@/components/value-proposition"
-import { MobileOptimizations } from "@/components/mobile-optimizations"
 
 export default function Home() {
   return (
@@ -18,7 +17,6 @@ export default function Home() {
       <FAQSection />
       <ServicesSection />
       <ValueProposition />
-      <MobileOptimizations />
       <GallerySection />
       <SocialProof />
       <TestimonialsSection />
