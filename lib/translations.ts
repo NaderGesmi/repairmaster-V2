@@ -72,6 +72,10 @@ export const translations = {
         title: "Freon Check",
         description: "Testing and refilling freon for optimal performance.",
       },
+      diagnostics: {
+        title: "Diagnostics",
+        description: "Thorough diagnostics to identify and fix issues.",
+      },
       details: "Details & Pricing",
       book: "Book Now",
     },
@@ -217,6 +221,10 @@ export const translations = {
         title: "Verificare Freon",
         description: "Testare și reumplere cu freon pentru performanță optimă.",
       },
+      diagnostics: {
+        title: "Diagnosticare",
+        description: "Diagnosticare aprofundată pentru identificarea și rezolvarea problemelor.",
+      },
       details: "Detalii și Prețuri",
       book: "Programează Acum",
     },
@@ -358,6 +366,10 @@ export const translations = {
       freon: {
         title: "فحص الفريون",
         description: "اختبار وإعادة تعبئة الفريون لأداء مثالي.",
+      },
+      diagnostics: {
+        title: "التشخيص",
+        description: "تشخيص شامل لتحديد وإصلاح المشكلات.",
       },
       details: "التفاصيل والأسعار",
       book: "احجز الآن",

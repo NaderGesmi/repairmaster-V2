@@ -38,8 +38,8 @@ export function ServicesSection() {
     },
     {
       icon: <Shield className="h-10 w-10 text-primary" />,
-      title: t("footer.services.diagnostics"),
-      description: "Thorough diagnostics to identify and fix issues.",
+      title: t("services.diagnostics.title"),
+      description: t("services.diagnostics.description"),
       image: "/images/diagnostics.jpg",
     },
   ]

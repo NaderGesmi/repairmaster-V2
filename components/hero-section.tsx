@@ -1,49 +1,46 @@
 "use client"
 
 import { useLanguage } from "@/components/language-provider"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
 import { motion } from "framer-motion"
 import Image from "next/image"
 
 export function HeroSection() {
   const { t, dir } = useLanguage()
 
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  }
-
-  const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 },
-  }
-
   return (
-    <section className="relative py-20 md:py-28 bg-gradient-to-b from-background to-muted" dir={dir}>
+    <section className="relative py-20 md:py-32 overflow-hidden" dir={dir}>
       <div className="container px-4 md:px-6">
-        <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-          <motion.div className="space-y-4" variants={container} initial="hidden" animate="show">
-            <motion.h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl" variants={item}>
-              {t("hero.title")}
-            </motion.h1>
-            <motion.p className="max-w-[600px] text-muted-foreground md:text-xl" variants={item}>
-              {t("hero.subtitle")}
-            </motion.p>
-            <motion.div className="flex flex-col sm:flex-row gap-3 pt-4" variants={item}>
-              <Button asChild size="lg" className="font-medium">
-                <Link href="#contact">{t("hero.cta")}</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="font-medium">
-                <a href="https://wa.me/40741318528">WhatsApp</a>
-              </Button>
-            </motion.div>
+        <div className="grid gap-12 lg:grid-cols-2 items-center">
+          <motion.div
+            className="flex flex-col justify-center space-y-4"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="space-y-2">
+              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl">
+                {t("hero.title")}
+              </h1>
+              <p className="max-w-[600px] text-muted-foreground md:text-xl">
+                {t("hero.subtitle")}
+              </p>
+            </div>
+            <div className="flex flex-col gap-2 min-[400px]:flex-row">
+              <a
+                href="#pricing"
+                className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+              >
+                {t("hero.cta")}
+              </a>
+              <a
+                href="https://wa.me/+40741318528"
+                className="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+              >
+                {t("hero.secondaryCta")}
+              </a>
+            </div>
           </motion.div>
+
           <motion.div
             className="flex justify-center"
             initial={{ opacity: 0, scale: 0.9 }}
@@ -54,9 +51,10 @@ export function HeroSection() {
               <Image
                 src="https://res.cloudinary.com/katakuri740/image/upload/v1748195230/dkbpw2byabqk306ckpeb.jpg"
                 alt={t("hero.imageAlt")}
-                width={600}
-                height={400}
-                className="object-cover w-full h-full"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover transition-transform duration-300 group-hover:scale-110"
+                priority
               />
             </div>
           </motion.div>

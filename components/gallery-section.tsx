@@ -41,7 +41,7 @@ export function GallerySection() {
       alt: "Gallery Image 8"
     },
     {
-      src: "https://res.cloudinary.com/katakuri740/image/upload/v1748181371/gallery/rdmmmlany4gq7qrbzuva.jpg", // Repeated URL based on user's list
+      src: "https://res.cloudinary.com/katakuri740/image/upload/v1748181371/gallery/rdmmmlany4gq7qrbzuva.jpg",
       alt: "Gallery Image 9"
     },
     {
@@ -87,8 +87,9 @@ export function GallerySection() {
                   src={image.src}
                   alt={image.alt}
                   fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-cover transition-transform duration-300 group-hover:scale-110"
+                  priority={index < 4}
                 />
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
