@@ -20,8 +20,6 @@ const nextConfig = {
       }
     ],
   },
-  // Remove static export configuration
-  trailingSlash: true,
 }
 
 export default nextConfig

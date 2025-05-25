@@ -6,9 +6,6 @@ export const translations = {
       testimonials: "Testimonials",
       contact: "Contact",
     },
-    services: "Services",
-    pricing: "Pricing",
-    testimonials: "Testimonials",
     contact: {
       title: "Contact & Booking",
       subtitle: "Get in touch with us for professional repair services. We're here to help!",
@@ -147,9 +144,6 @@ export const translations = {
       testimonials: "Testimoniale",
       contact: "Contact",
     },
-    services: "Servicii",
-    pricing: "Prețuri",
-    testimonials: "Testimoniale",
     contact: {
       title: "Contact și Programare",
       subtitle: "Contactați-ne pentru servicii profesionale de reparații. Suntem aici să vă ajutăm!",
@@ -291,9 +285,6 @@ export const translations = {
       testimonials: "آراء العملاء",
       contact: "اتصل بنا",
     },
-    services: "الخدمات",
-    pricing: "الأسعار",
-    testimonials: "آراء العملاء",
     contact: {
       title: "الاتصال والحجز",
       subtitle: "تواصل معنا للحصول على خدمات إصلاح احترافية. نحن هنا للمساعدة!",
@@ -424,4 +415,4 @@ export const translations = {
       callNow: "اتصل بنا الآن أو احجز عبر الإنترنت للحصول على استجابة سريعة!"
     },
   },
-}
+} as const;
