@@ -234,6 +234,27 @@ export const translations = {
         description: "Large touch targets and smooth interactions for mobile users"
       }
     },
+    booking: {
+      name: "Full Name",
+      namePlaceholder: "Enter your full name",
+      phone: "Phone Number",
+      phonePlaceholder: "Enter your phone number",
+      service: "Select a Service",
+      selectService: "Select a Service",
+      addressType: "Address Input Method",
+      autoLocation: "Use My Location",
+      manualLocation: "Enter Manually",
+      address: "Address",
+      addressPlaceholder: "Enter your address",
+      datetime: "Preferred Date & Time",
+      notes: "Notes (Optional)",
+      notesPlaceholder: "Any additional information or special requests",
+      submit: "Submit Booking",
+      submitting: "Submitting...",
+      success: "✅ Booking sent! We'll contact you soon.",
+      locationError: "Could not get your location. Please enter address manually.",
+      submitError: "Failed to submit booking. Please try again."
+    },
   },
   ro: {
     navbar: {
@@ -473,6 +494,27 @@ export const translations = {
         description: "Zone tactile mari și interacțiuni fluide pentru utilizatorii mobili"
       }
     },
+    booking: {
+      name: "Nume Complet",
+      namePlaceholder: "Introduceți numele complet",
+      phone: "Număr de Telefon",
+      phonePlaceholder: "Introduceți numărul de telefon",
+      service: "Selectați un Serviciu",
+      selectService: "Selectați un Serviciu",
+      addressType: "Metodă de Introducere a Adresei",
+      autoLocation: "Folosește Locația Mea",
+      manualLocation: "Introducere Manuală",
+      address: "Adresă",
+      addressPlaceholder: "Introduceți adresa",
+      datetime: "Data și Ora Preferată",
+      notes: "Note (Opțional)",
+      notesPlaceholder: "Informații suplimentare sau cereri speciale",
+      submit: "Trimite Programarea",
+      submitting: "Se trimite...",
+      success: "✅ Programare trimisă! Vă vom contacta în curând.",
+      locationError: "Nu s-a putut obține locația. Vă rugăm să introduceți adresa manual.",
+      submitError: "Nu s-a putut trimite programarea. Vă rugăm să încercați din nou."
+    },
   },
   ar: {
     navbar: {
@@ -707,6 +749,27 @@ export const translations = {
         title: "سهل اللمس",
         description: "أزرار كبيرة وسهلة اللمس وتفاعلات سلسة لمستخدمي الموبايل"
       }
+    },
+    booking: {
+      name: "الاسم الكامل",
+      namePlaceholder: "أدخل اسمك الكامل",
+      phone: "رقم الهاتف",
+      phonePlaceholder: "أدخل رقم هاتفك",
+      service: "اختر خدمة",
+      selectService: "اختر خدمة",
+      addressType: "طريقة إدخال العنوان",
+      autoLocation: "استخدام موقعي",
+      manualLocation: "أدخل يدوياً",
+      address: "العنوان",
+      addressPlaceholder: "أدخل عنوانك",
+      datetime: "التاريخ والوقت المفضل",
+      notes: "ملاحظات (اختياري)",
+      notesPlaceholder: "أي معلومات إضافية أو طلبات خاصة",
+      submit: "إرسال الحجز",
+      submitting: "جاري الإرسال...",
+      success: "✅ تم إرسال الحجز! سنتواصل معك قريباً.",
+      locationError: "تعذر الحصول على موقعك. يرجى إدخال العنوان يدوياً.",
+      submitError: "فشل إرسال الحجز. يرجى المحاولة مرة أخرى."
     },
   },
 } as const;
