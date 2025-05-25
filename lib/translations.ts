@@ -145,6 +145,95 @@ export const translations = {
       title: "Gallery",
       subtitle: "See real repair photos",
     },
+    trust: {
+      title: "Why Trust Us",
+      subtitle: "We're committed to providing the highest quality service with complete transparency",
+      warranty: {
+        title: "6-Month Warranty",
+        description: "All our repairs come with a 6-month warranty for your peace of mind"
+      },
+      sameDay: {
+        title: "Same-Day Service",
+        description: "Fast response and same-day service for urgent repairs"
+      },
+      certified: {
+        title: "Certified Technicians",
+        description: "Our team consists of certified professionals with years of experience"
+      },
+      guarantee: {
+        title: "Satisfaction Guaranteed",
+        description: "We guarantee our work and your complete satisfaction"
+      }
+    },
+    faq: {
+      title: "Frequently Asked Questions",
+      subtitle: "Find answers to common questions about our services",
+      warranty: {
+        question: "What does the 6-month warranty cover?",
+        answer: "Our 6-month warranty covers all parts and labor for the repairs we perform. If the same issue occurs within 6 months, we'll fix it at no additional cost. The warranty doesn't cover new issues or damage caused by misuse."
+      },
+      booking: {
+        question: "How do I book a service?",
+        answer: "You can book a service in three ways: 1) Fill out our online booking form, 2) Call us directly at +40 741 318 528, or 3) Message us on WhatsApp. We'll confirm your booking and provide an estimated arrival time."
+      },
+      payment: {
+        question: "What payment methods do you accept?",
+        answer: "We accept cash, credit/debit cards, and bank transfers. Payment is due after the service is completed and you're satisfied with the work. We provide a detailed invoice for all services."
+      },
+      emergency: {
+        question: "Do you offer emergency services?",
+        answer: "Yes, we offer same-day emergency services for urgent repairs. Call us directly for immediate assistance. We prioritize emergency cases and will do our best to help you as quickly as possible."
+      },
+      diagnostics: {
+        question: "Is diagnostics free?",
+        answer: "Yes, we offer free diagnostics for all repair services. This helps us identify the exact issue and provide you with an accurate quote before any work begins."
+      },
+      coverage: {
+        question: "What areas do you service?",
+        answer: "We currently service all areas of Bucharest. Our main service area is Sector 3, but we can accommodate requests from other sectors as well. Contact us to confirm coverage for your specific location."
+      }
+    },
+    value: {
+      title: "Why Choose Us",
+      subtitle: "We combine professional expertise with customer-focused service",
+      quality: {
+        title: "Quality Guaranteed",
+        description: "We use only high-quality parts and provide a 6-month warranty on all repairs"
+      },
+      speed: {
+        title: "Fast Service",
+        description: "Same-day service available for urgent repairs. We value your time"
+      },
+      trust: {
+        title: "Trusted Experts",
+        description: "Certified technicians with years of experience in electronics repair"
+      },
+      transparency: {
+        title: "Transparent Pricing",
+        description: "No hidden fees. Get a clear quote before we start any work"
+      },
+      cta: "Get a Free Quote"
+    },
+    mobile: {
+      title: "Mobile Optimized",
+      subtitle: "Experience our services seamlessly on any device",
+      responsive: {
+        title: "Fully Responsive",
+        description: "Perfect experience on any device, from mobile to desktop"
+      },
+      performance: {
+        title: "Fast Loading",
+        description: "Optimized for quick loading even on mobile networks"
+      },
+      battery: {
+        title: "Battery Efficient",
+        description: "Optimized to minimize battery usage on mobile devices"
+      },
+      touch: {
+        title: "Touch Friendly",
+        description: "Large touch targets and smooth interactions for mobile users"
+      }
+    },
   },
   ro: {
     navbar: {
@@ -295,6 +384,95 @@ export const translations = {
       title: "Galerie",
       subtitle: "Vezi exemple reale de reparații",
     },
+    trust: {
+      title: "De Ce Să Ne Alegeți",
+      subtitle: "Ne angajăm să oferim servicii de cea mai înaltă calitate cu transparență totală",
+      warranty: {
+        title: "Garanție 6 Luni",
+        description: "Toate reparațiile noastre vin cu garanție de 6 luni pentru liniștea dumneavoastră"
+      },
+      sameDay: {
+        title: "Serviciu în Aceeași Zi",
+        description: "Răspuns rapid și serviciu în aceeași zi pentru reparații urgente"
+      },
+      certified: {
+        title: "Tehnicieni Certificați",
+        description: "Echipa noastră este formată din profesioniști certificați cu ani de experiență"
+      },
+      guarantee: {
+        title: "Satisfacție Garantată",
+        description: "Ne garantăm munca și satisfacția dumneavoastră completă"
+      }
+    },
+    faq: {
+      title: "Întrebări Frecvente",
+      subtitle: "Găsiți răspunsuri la întrebările comune despre serviciile noastre",
+      warranty: {
+        question: "Ce acoperă garanția de 6 luni?",
+        answer: "Garanția noastră de 6 luni acoperă toate piesele și manopera pentru reparațiile pe care le efectuăm. Dacă aceeași problemă apare în termen de 6 luni, o vom repara fără costuri suplimentare. Garanția nu acoperă probleme noi sau daune cauzate de utilizare necorespunzătoare."
+      },
+      booking: {
+        question: "Cum pot programa un serviciu?",
+        answer: "Puteți programa un serviciu în trei moduri: 1) Completați formularul nostru online, 2) Sunați-ne direct la +40 741 318 528, sau 3) Trimiteți-ne un mesaj pe WhatsApp. Vă vom confirma programarea și vă vom oferi o oră estimată de sosire."
+      },
+      payment: {
+        question: "Ce metode de plată acceptați?",
+        answer: "Acceptăm numerar, carduri de credit/debit și transferuri bancare. Plata se face după finalizarea serviciului și după ce sunteți mulțumit de lucrare. Oferim factură detaliată pentru toate serviciile."
+      },
+      emergency: {
+        question: "Oferiți servicii de urgență?",
+        answer: "Da, oferim servicii de urgență în aceeași zi pentru reparații urgente. Sunați-ne direct pentru asistență imediată. Prioritizăm cazurile de urgență și vom face tot posibilul să vă ajutăm cât mai rapid."
+      },
+      diagnostics: {
+        question: "Diagnosticarea este gratuită?",
+        answer: "Da, oferim diagnosticare gratuită pentru toate serviciile de reparații. Acest lucru ne ajută să identificăm exact problema și să vă oferim un preț exact înainte de a începe orice lucrare."
+      },
+      coverage: {
+        question: "În ce zone oferiți servicii?",
+        answer: "În prezent, oferim servicii în toate zonele din București. Zona noastră principală de servicii este Sectorul 3, dar putem onora și cereri din alte sectoare. Contactați-ne pentru a confirma acoperirea pentru locația dvs. specifică."
+      }
+    },
+    value: {
+      title: "De Ce Să Ne Alegeți",
+      subtitle: "Combinăm expertiza profesională cu servicii orientate spre client",
+      quality: {
+        title: "Calitate Garantată",
+        description: "Folosim doar piese de înaltă calitate și oferim garanție de 6 luni pentru toate reparațiile"
+      },
+      speed: {
+        title: "Serviciu Rapid",
+        description: "Serviciu în aceeași zi disponibil pentru reparații urgente. Respectăm timpul dumneavoastră"
+      },
+      trust: {
+        title: "Experți de Încredere",
+        description: "Tehnicieni certificați cu ani de experiență în reparații electronice"
+      },
+      transparency: {
+        title: "Prețuri Transparente",
+        description: "Fără costuri ascunse. Primiți o ofertă clară înainte de a începe orice lucrare"
+      },
+      cta: "Solicitați Ofertă Gratuită"
+    },
+    mobile: {
+      title: "Optimizat pentru Mobil",
+      subtitle: "Experimentați serviciile noastre fără probleme pe orice dispozitiv",
+      responsive: {
+        title: "Complet Responsiv",
+        description: "Experiență perfectă pe orice dispozitiv, de la mobil la desktop"
+      },
+      performance: {
+        title: "Încărcare Rapidă",
+        description: "Optimizat pentru încărcare rapidă chiar și pe rețele mobile"
+      },
+      battery: {
+        title: "Eficient la Baterie",
+        description: "Optimizat pentru a minimiza consumul de baterie pe dispozitivele mobile"
+      },
+      touch: {
+        title: "Prietenos cu Tactilul",
+        description: "Zone tactile mari și interacțiuni fluide pentru utilizatorii mobili"
+      }
+    },
   },
   ar: {
     navbar: {
@@ -440,6 +618,95 @@ export const translations = {
     gallery: {
       title: "معرض الصور",
       subtitle: "صور من أعمالنا",
+    },
+    trust: {
+      title: "لماذا تثق بنا",
+      subtitle: "نحن ملتزمون بتقديم أعلى جودة من الخدمة مع الشفافية الكاملة",
+      warranty: {
+        title: "ضمان 6 أشهر",
+        description: "جميع إصلاحاتنا تأتي مع ضمان لمدة 6 أشهر لراحة بالك"
+      },
+      sameDay: {
+        title: "خدمة في نفس اليوم",
+        description: "استجابة سريعة وخدمة في نفس اليوم للإصلاحات العاجلة"
+      },
+      certified: {
+        title: "فنيون معتمدون",
+        description: "يتكون فريقنا من محترفين معتمدين مع سنوات من الخبرة"
+      },
+      guarantee: {
+        title: "ضمان الرضا",
+        description: "نحن نضمن عملنا ورضاك التام"
+      }
+    },
+    faq: {
+      title: "الأسئلة الشائعة",
+      subtitle: "اعثر على إجابات للأسئلة الشائعة حول خدماتنا",
+      warranty: {
+        question: "ماذا يغطي الضمان لمدة 6 أشهر؟",
+        answer: "يغطي ضماننا لمدة 6 أشهر جميع الأجزاء والعمالة للإصلاحات التي نقوم بها. إذا حدثت نفس المشكلة خلال 6 أشهر، سنقوم بإصلاحها دون أي تكلفة إضافية. لا يغطي الضمان المشكلات الجديدة أو الأضرار الناجمة عن سوء الاستخدام."
+      },
+      booking: {
+        question: "كيف يمكنني حجز خدمة؟",
+        answer: "يمكنك حجز خدمة بثلاث طرق: 1) ملء نموذج الحجز عبر الإنترنت، 2) الاتصال بنا مباشرة على +40 741 318 528، أو 3) إرسال رسالة عبر WhatsApp. سنؤكد حجزك ونقدم لك وقت وصول تقديري."
+      },
+      payment: {
+        question: "ما هي طرق الدفع التي تقبلونها؟",
+        answer: "نقبل النقد وبطاقات الائتمان/الخصم والتحويلات المصرفية. يتم الدفع بعد اكتمال الخدمة ورضاك عن العمل. نقدم فاتورة مفصلة لجميع الخدمات."
+      },
+      emergency: {
+        question: "هل تقدمون خدمات الطوارئ؟",
+        answer: "نعم، نقدم خدمات الطوارئ في نفس اليوم للإصلاحات العاجلة. اتصل بنا مباشرة للحصول على مساعدة فورية. نحن نعطي الأولوية لحالات الطوارئ وسنبذل قصارى جهدنا لمساعدتك في أسرع وقت ممكن."
+      },
+      diagnostics: {
+        question: "هل التشخيص مجاني؟",
+        answer: "نعم، نقدم تشخيصًا مجانيًا لجميع خدمات الإصلاح. هذا يساعدنا على تحديد المشكلة بدقة وتقديم عرض سعر دقيق قبل بدء أي عمل."
+      },
+      coverage: {
+        question: "ما هي المناطق التي تخدمونها؟",
+        answer: "نحن نخدم حاليًا جميع مناطق بوخارست. منطقة الخدمة الرئيسية لدينا هي القطاع 3، ولكن يمكننا تلبية الطلبات من القطاعات الأخرى أيضًا. اتصل بنا لتأكيد التغطية لموقعك المحدد."
+      }
+    },
+    value: {
+      title: "لماذا تختارنا",
+      subtitle: "نحن نجمع بين الخبرة المهنية والخدمة الموجهة للعملاء",
+      quality: {
+        title: "جودة مضمونة",
+        description: "نستخدم قطع غيار عالية الجودة ونقدم ضمانًا لمدة 6 أشهر على جميع الإصلاحات"
+      },
+      speed: {
+        title: "خدمة سريعة",
+        description: "خدمة في نفس اليوم متاحة للإصلاحات العاجلة. نحن نقدر وقتك"
+      },
+      trust: {
+        title: "خبراء موثوقون",
+        description: "فنيون معتمدون مع سنوات من الخبرة في إصلاح الإلكترونيات"
+      },
+      transparency: {
+        title: "أسعار شفافة",
+        description: "لا توجد رسوم خفية. احصل على عرض سعر واضح قبل أن نبدأ أي عمل"
+      },
+      cta: "احصل على عرض سعر مجاني"
+    },
+    mobile: {
+      title: "مُحسّن للموبايل",
+      subtitle: "استمتع بخدماتنا بسلاسة على أي جهاز",
+      responsive: {
+        title: "متجاوب بالكامل",
+        description: "تجربة مثالية على أي جهاز، من الموبايل إلى سطح المكتب"
+      },
+      performance: {
+        title: "تحميل سريع",
+        description: "مُحسّن للتحميل السريع حتى على الشبكات المتنقلة"
+      },
+      battery: {
+        title: "كفاءة البطارية",
+        description: "مُحسّن لتقليل استهلاك البطارية على الأجهزة المحمولة"
+      },
+      touch: {
+        title: "سهل اللمس",
+        description: "أزرار كبيرة وسهلة اللمس وتفاعلات سلسة لمستخدمي الموبايل"
+      }
     },
   },
 } as const;

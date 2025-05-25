@@ -5,6 +5,7 @@ import { Footer } from "@/components/footer"
 import { ThemeProvider } from "@/components/theme-provider"
 import { LanguageProvider } from "@/components/language-provider"
 import { Toaster } from "@/components/toaster"
+import { StickyContact } from "@/components/sticky-contact"
 
 export const metadata = {
   title: "RepairMaster - Professional Repair Services",
@@ -27,6 +28,7 @@ export default function RootLayout({
               <div className="flex-1">{children}</div>
               <Footer />
               <Toaster />
+              <StickyContact />
             </div>
           </ThemeProvider>
         </LanguageProvider>
