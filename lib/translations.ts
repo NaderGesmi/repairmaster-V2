@@ -51,6 +51,7 @@ export const translations = {
       subtitle:
         "We fix electronics and air conditioning in Bucharest. Transparent pricing, 6-month warranty, and rapid response.",
       cta: "Book a Service",
+      secondaryCta: "Learn More",
       imageAlt: "Repair technician fixing electronics",
     },
     services: {
@@ -199,6 +200,7 @@ export const translations = {
       subtitle:
         "Reparăm electronice și aer condiționat în București. Prețuri transparente, garanție de 6 luni și răspuns rapid.",
       cta: "Programează un Serviciu",
+      secondaryCta: "Află Mai Multe",
       imageAlt: "Tehnician reparând electronice",
     },
     services: {
@@ -346,6 +348,7 @@ export const translations = {
       subtitle:
         "نقوم بإصلاح الإلكترونيات وأجهزة تكييف الهواء في بوخارست. أسعار شفافة، ضمان لمدة 6 أشهر، واستجابة سريعة.",
       cta: "احجز خدمة",
+      secondaryCta: "اعرف المزيد",
       imageAlt: "فني إصلاح يقوم بإصلاح الإلكترونيات",
     },
     services: {
