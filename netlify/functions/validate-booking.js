@@ -153,79 +153,37 @@ exports.handler = async function(event, context) {
 
   try {
     const data = JSON.parse(event.body)
-    const { bookingTime, name, email, phone, message } = data
+    const { date, time } = data
 
     // Debug logs
-    console.log('Received bookingTime:', bookingTime)
-    const parsedTime = new Date(bookingTime)
-    console.log('Parsed time:', parsedTime)
+    console.log('Received date:', date)
+    console.log('Received time:', time)
 
-    // Validate bookingTime
-    if (!bookingTime || isNaN(parsedTime.getTime())) {
-      return {
-        statusCode: 400,
-        headers,
-        body: JSON.stringify({
-          error: 'validation_error',
-          message: 'Invalid booking time format. Use ISO string.'
-        })
-      }
+    // Combine date + time into a Date object (in UTC)
+    const bookingDateTime = new Date(`${date}T${time}:00Z`)
+    console.log('Parsed bookingDateTime (UTC):', bookingDateTime)
+
+    // Validate date and time
+    if (isNaN(bookingDateTime.getTime())) {
+      throw new Error("Invalid date or time format.")
     }
 
-    // Convert to Bucharest timezone
-    const zonedTime = utcToZonedTime(parsedTime, TIMEZONE)
-    console.log('Zoned time:', zonedTime)
-
-    // Get hours in Bucharest timezone
-    const hours = zonedTime.getHours()
-
-    // Check weekday vs weekend hours
-    if (isWeekend(zonedTime)) {
-      // Weekend hours: 08:00-23:00
-      if (hours < 8 || hours >= 23) {
-        return {
-          statusCode: 400,
-          headers,
-          body: JSON.stringify({
-            error: 'invalid_time_slot',
-            message: 'Weekend hours are 08:00-23:00',
-            details: {
-              selected: formatTimeInBucharest(zonedTime),
-              allowed: '08:00-23:00'
-            }
-          })
-        }
-      }
-    } else {
-      // Weekday hours: 18:00-23:00
-      if (hours < 18 || hours >= 23) {
-        return {
-          statusCode: 400,
-          headers,
-          body: JSON.stringify({
-            error: 'invalid_time_slot',
-            message: 'Weekday hours are 18:00-23:00',
-            details: {
-              selected: formatTimeInBucharest(zonedTime),
-              allowed: '18:00-23:00'
-            }
-          })
-        }
-      }
+    // Validate time slot (e.g., 9 AM - 5 PM UTC)
+    const hoursUTC = bookingDateTime.getUTCHours()
+    if (hoursUTC < 9 || hoursUTC >= 17) {
+      throw new Error("Time slot must be between 09:00 and 17:00 UTC.")
     }
 
-    // If validation passes, return success
+    // Optional: Add a check for past dates if needed
+    const nowUTC = new Date()
+    if (bookingDateTime < nowUTC) {
+       throw new Error("Cannot book appointments in the past.");
+    }
+
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify({ 
-        success: true,
-        message: 'Booking time is valid',
-        details: {
-          bookingTime: bookingTime,
-          zonedTime: formatTimeInBucharest(zonedTime)
-        }
-      })
+      body: JSON.stringify({ success: true, message: "Booking time is valid." })
     }
   } catch (error) {
     console.error('Validation error:', error)

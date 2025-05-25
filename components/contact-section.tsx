@@ -180,36 +180,18 @@ export function ContactSection() {
     setErrors({}) // Clear previous errors
 
     try {
-      // Convert date and time to ISO format
-      let bookingTime = ""
-      if (date && time) {
-        // Parse time (e.g., "11:00 AM")
-        const [timeStr, modifier] = time.split(" ")
-        let [hours, minutes] = timeStr.split(":").map(Number)
-        
-        // Convert to 24-hour format
-        if (modifier === "PM" && hours < 12) hours += 12
-        if (modifier === "AM" && hours === 12) hours = 0
+      // Format date as YYYY-MM-DD
+      const formattedDate = date ? format(date, "yyyy-MM-dd") : ""
 
-        // Create ISO string
-        const isoDate = format(date, "yyyy-MM-dd")
-        const isoTime = new Date(`${isoDate}T${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:00`)
-        bookingTime = isoTime.toISOString()
-
-        // Debug logs
-        console.log('Raw date:', date)
-        console.log('Raw time:', time)
-        console.log('ISO time:', bookingTime)
-      }
-
-      // Validate with Netlify Function first
+      // Send date and time to Netlify Function
       const validationResponse = await fetch('/.netlify/functions/validate-booking', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          bookingTime,
+          date: formattedDate,
+          time,
           'form-name': 'booking',
           name,
           email,
@@ -221,7 +203,7 @@ export function ContactSection() {
       const validationResult = await validationResponse.json()
 
       if (!validationResponse.ok) {
-        if (validationResult.error === 'invalid_time_slot' || validationResult.error === 'past_booking') {
+        if (validationResult.error === 'invalid_time_slot' || validationResult.error === 'past_booking' || validationResult.error === 'validation_error') {
           setErrors(prev => ({
             ...prev,
             time: validationResult.message
