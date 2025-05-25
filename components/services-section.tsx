@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter } from "@/components/ui/card"
 import { Tv, Wind, Thermometer, Wrench, Settings, Shield } from "lucide-react"
 import Link from "next/link"
-import Image from "next/image"
 import { motion } from "framer-motion"
 
 export function ServicesSection() {
@@ -66,14 +65,13 @@ export function ServicesSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Card className="flex flex-col h-full overflow-hidden group">
+              <Card className="h-full flex flex-col">
                 <div className="relative h-48 overflow-hidden">
-                  <Image
+                  <img
                     src={service.image || "/placeholder.svg"}
                     alt={service.title}
-                    width={400}
-                    height={300}
                     className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+                    loading={index < 2 ? "eager" : "lazy"}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
                     <div className="p-4 w-full">
