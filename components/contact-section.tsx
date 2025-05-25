@@ -10,7 +10,6 @@ import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { format, isBefore, isAfter, setHours, setMinutes, isWeekend, parseISO } from "date-fns"
-import { formatInTimeZone } from "date-fns-tz"
 import { 
   CalendarIcon, 
   Loader2, 
@@ -39,44 +38,6 @@ export function ContactSection() {
   const [formStatus, setFormStatus] = useState<"idle" | "success" | "error">("idle")
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [timezoneOffset, setTimezoneOffset] = useState<number | null>(null)
-
-  const timeZone = "Europe/Bucharest"
-
-  useEffect(() => {
-    // Get current timezone offset
-    const getTimezoneOffset = () => {
-      const now = new Date()
-      const bucharestTime = formatInTimeZone(now, timeZone, 'HH:mm')
-      const userTime = formatInTimeZone(now, Intl.DateTimeFormat().resolvedOptions().timeZone, 'HH:mm')
-      
-      const [bucharestHours, bucharestMinutes] = bucharestTime.split(':').map(Number)
-      const [userHours, userMinutes] = userTime.split(':').map(Number)
-      
-      const bucharestTotalMinutes = bucharestHours * 60 + bucharestMinutes
-      const userTotalMinutes = userHours * 60 + userMinutes
-      
-      return Math.round((bucharestTotalMinutes - userTotalMinutes) / 60)
-    }
-
-    setTimezoneOffset(getTimezoneOffset())
-  }, [])
-
-  // Format time in Bucharest timezone
-  const formatBucharestTime = (date: Date) => {
-    return formatInTimeZone(date, timeZone, 'HH:mm')
-  }
-
-  // Get timezone warning message
-  const getTimezoneWarning = () => {
-    if (timezoneOffset === null) return null
-    
-    const offset = timezoneOffset
-    if (offset === 0) return null
-    
-    const direction = offset > 0 ? 'ahead' : 'behind'
-    const hours = Math.abs(offset)
-    return `All times shown in Bucharest time (EET/EEST). Your local time is ${hours} hour${hours !== 1 ? 's' : ''} ${direction}.`
-  }
 
   const timeSlots = [
     "06:00 PM",
@@ -113,40 +74,14 @@ export function ContactSection() {
 
   const validateTimeSlot = (selectedDate: Date, selectedTime: string) => {
     // Convert selected time to 24-hour format
-    const [time, period] = selectedTime.split(" ")
-    let [hours, minutes] = time.split(":").map(Number)
-    if (period === "PM" && hours !== 12) hours += 12
-    if (period === "AM" && hours === 12) hours = 0
+    const [hours, minutes] = selectedTime.split(":").map(Number);
 
     // Create date object in user's timezone
     const selectedDateTime = setMinutes(setHours(selectedDate, hours), minutes)
     
-    // Get current time in Bucharest
-    const now = new Date()
-    
-    // Format both dates in Bucharest timezone for comparison
-    const selectedTimeBucharest = formatInTimeZone(selectedDateTime, timeZone, 'HH:mm')
-    const currentTimeBucharest = formatInTimeZone(now, timeZone, 'HH:mm')
-    
     // Check if date is in the past
-    if (isBefore(selectedDateTime, now)) {
+    if (isBefore(selectedDateTime, new Date())) {
       return "Past dates and times are not allowed"
-    }
-
-    // Get hours in Bucharest timezone
-    const [bucharestHours] = selectedTimeBucharest.split(':').map(Number)
-
-    // Check weekday vs weekend hours
-    if (isWeekend(selectedDateTime)) {
-      // Weekend hours: 08:00-23:00
-      if (bucharestHours < 8 || bucharestHours >= 23) {
-        return "Weekend hours are 08:00-23:00"
-      }
-    } else {
-      // Weekday hours: 18:00-23:00
-      if (bucharestHours < 18 || bucharestHours >= 23) {
-        return "Weekday hours are 18:00-23:00"
-      }
     }
 
     return null
@@ -265,11 +200,7 @@ export function ContactSection() {
           <p className="text-muted-foreground max-w-[600px]">
             {t("contact.subtitle")}
           </p>
-          {getTimezoneWarning() && (
-            <p className="text-sm text-amber-600 dark:text-amber-400">
-              {getTimezoneWarning()}
-            </p>
-          )}
+          {/* No timezone warning message in the new version */}
         </div>
 
         <div className="grid gap-8 md:grid-cols-2 mt-12">
@@ -398,18 +329,14 @@ export function ContactSection() {
                   <Clock className="h-5 w-5 text-primary" />
                   <Label>{t("contact.time")}</Label>
                 </div>
-                <Select value={time} onValueChange={setTime}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder={t("contact.selectTime")} />
-                  </SelectTrigger>
-                  <SelectContent className="z-50">
-                    {getAvailableTimeSlots(date).map((slot) => (
-                      <SelectItem key={slot} value={slot}>
-                        {slot}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <Input
+                  id="time"
+                  name="time"
+                  type="time"
+                  value={time}
+                  onChange={(e) => setTime(e.target.value)}
+                  className="w-full"
+                />
                 <input type="hidden" name="time" value={time} />
                 {errors.time && <p className="text-sm text-destructive">{errors.time}</p>}
               </div>
