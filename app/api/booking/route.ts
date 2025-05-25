@@ -19,8 +19,8 @@ export async function POST(request: Request) {
         console.log('Received booking data:', data);
 
         // Validate required fields
-        const requiredFields = ['name', 'phone', 'service', 'address', 'datetime']
-        const missingFields = requiredFields.filter(field => !data[field])
+        const requiredFields: (keyof BookingData)[] = ['name', 'phone', 'service', 'address', 'datetime'];
+        const missingFields = requiredFields.filter(field => !data[field]);
 
         if (missingFields.length > 0) {
             console.error('Missing required fields:', missingFields);
