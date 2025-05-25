@@ -9,19 +9,7 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'res.cloudinary.com',
-        pathname: '/katakuri740/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'res.cloudinary.com',
-        pathname: '/**',
-      }
-    ],
-    unoptimized: true,
+    domains: ['res.cloudinary.com'], // allow Cloudinary domain
   },
 }
 
