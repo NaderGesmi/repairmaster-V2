@@ -27,9 +27,42 @@ function formatTimeInBucharest(date) {
 // Validate booking time slot
 function validateTimeSlot(date, time) {
   try {
-    // Parse the date and convert time to 24-hour format
-    const bookingDate = parseISO(date)
-    const { hours, minutes } = convertTo24Hour(time)
+    if (!date || !time) {
+      return {
+        error: 'validation_error',
+        message: 'Date and time are required',
+        details: 'Missing date or time parameter'
+      }
+    }
+
+    // Parse the date string into a Date object
+    let bookingDate
+    try {
+      bookingDate = parseISO(date)
+      if (isNaN(bookingDate.getTime())) {
+        throw new Error('Invalid date format')
+      }
+    } catch (error) {
+      return {
+        error: 'validation_error',
+        message: 'Invalid date format',
+        details: error.message
+      }
+    }
+
+    // Convert time to 24-hour format
+    let hours, minutes
+    try {
+      const result = convertTo24Hour(time)
+      hours = result.hours
+      minutes = result.minutes
+    } catch (error) {
+      return {
+        error: 'validation_error',
+        message: 'Invalid time format',
+        details: error.message
+      }
+    }
     
     // Create date object in user's timezone
     const selectedDateTime = setMinutes(setHours(bookingDate, hours), minutes)

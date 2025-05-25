@@ -180,12 +180,18 @@ export function ContactSection() {
     setErrors({}) // Clear previous errors
 
     try {
+      // Format date in ISO format (YYYY-MM-DD)
+      const formattedDate = date ? format(date, "yyyy-MM-dd") : ""
+      
       // Validate with Netlify Function first
       const validationResponse = await fetch('/.netlify/functions/validate-booking', {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({
           'form-name': 'booking',
-          date: date ? format(date, "yyyy-MM-dd") : "",
+          date: formattedDate,
           time,
           name,
           email,
