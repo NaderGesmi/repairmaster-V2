@@ -1,415 +1,71 @@
 "use client"
 
-import { useState, useEffect } from "react"
 import { useLanguage } from "@/components/language-provider"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Calendar } from "@/components/ui/calendar"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { format, isBefore, isAfter, setHours, setMinutes, isWeekend, parseISO } from "date-fns"
-import { 
-  CalendarIcon, 
-  Loader2, 
-  CheckCircle2, 
-  Phone, 
-  MessageSquare, 
-  Mail, 
-  Clock, 
-  User, 
-  Building2, 
-  Wrench, 
-  Shield, 
-  Settings 
-} from "lucide-react"
-import { cn } from "@/lib/utils"
+import { motion } from "framer-motion"
+import { BookingForm } from "@/components/booking-form"
+import { Tv, Wind, Thermometer, Wrench, Phone, MessageSquare, Mail } from "lucide-react"
 
 export function ContactSection() {
-  const { t, dir, language } = useLanguage()
-  const [date, setDate] = useState<Date>()
-  const [time, setTime] = useState<string>("")
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [phone, setPhone] = useState("")
-  const [message, setMessage] = useState("")
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [formStatus, setFormStatus] = useState<"idle" | "success" | "error">("idle")
-  const [errors, setErrors] = useState<Record<string, string>>({})
-  const [timezoneOffset, setTimezoneOffset] = useState<number | null>(null)
-
-  const timeSlots = [
-    "06:00 PM",
-    "07:00 PM",
-    "08:00 PM",
-    "09:00 PM",
-    "10:00 PM",
-    "11:00 PM"
-  ]
-
-  const weekendTimeSlots = [
-    "08:00 AM",
-    "09:00 AM",
-    "10:00 AM",
-    "11:00 AM",
-    "12:00 PM",
-    "01:00 PM",
-    "02:00 PM",
-    "03:00 PM",
-    "04:00 PM",
-    "05:00 PM",
-    "06:00 PM",
-    "07:00 PM",
-    "08:00 PM",
-    "09:00 PM",
-    "10:00 PM",
-    "11:00 PM"
-  ]
-
-  const getAvailableTimeSlots = (selectedDate: Date | undefined) => {
-    if (!selectedDate) return timeSlots
-    return isWeekend(selectedDate) ? weekendTimeSlots : timeSlots
-  }
-
-  const validateTimeSlot = (selectedDate: Date, selectedTime: string) => {
-    // Convert selected time to 24-hour format
-    const [hours, minutes] = selectedTime.split(":").map(Number);
-
-    // Create date object in user's timezone
-    const selectedDateTime = setMinutes(setHours(selectedDate, hours), minutes)
-    
-    // Check if date is in the past
-    if (isBefore(selectedDateTime, new Date())) {
-      return "Past dates and times are not allowed"
-    }
-
-    return null
-  }
-
-  const validateForm = () => {
-    const newErrors: Record<string, string> = {}
-
-    if (!name.trim()) newErrors.name = t("contact.errors.nameRequired")
-    if (!email.trim()) newErrors.email = t("contact.errors.emailRequired")
-    else if (!/^\S+@\S+\.\S+$/.test(email)) newErrors.email = t("contact.errors.emailInvalid")
-    if (!phone.trim()) newErrors.phone = t("contact.errors.phoneRequired")
-    if (!date) newErrors.date = t("contact.errors.dateRequired")
-    if (!time) newErrors.time = t("contact.errors.timeRequired")
-    else if (date) {
-      const timeError = validateTimeSlot(date, time)
-      if (timeError) newErrors.time = timeError
-    }
-
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-
-    if (!validateForm()) return
-
-    setIsSubmitting(true)
-    setFormStatus("idle")
-    setErrors({}) // Clear previous errors
-
-    try {
-      // Format date as YYYY-MM-DD
-      const formattedDate = date ? format(date, "yyyy-MM-dd") : ""
-
-      // Send date and time to Netlify Function
-      const validationResponse = await fetch('/.netlify/functions/validate-booking', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          date: formattedDate,
-          time,
-          'form-name': 'booking',
-          name,
-          email,
-          phone,
-          message
-        }),
-      })
-
-      const validationResult = await validationResponse.json()
-
-      if (!validationResponse.ok) {
-        if (validationResult.error === 'invalid_time_slot' || validationResult.error === 'past_booking' || validationResult.error === 'validation_error') {
-          setErrors(prev => ({
-            ...prev,
-            time: validationResult.message
-          }))
-          setFormStatus("error")
-          return
-        }
-        throw new Error(validationResult.message || 'Validation failed')
-      }
-
-      // If validation passes, submit the form
-      const form = e.target as HTMLFormElement
-      const formData = new FormData(form)
-      
-      const response = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formData as any).toString(),
-      })
-
-      if (!response.ok) throw new Error('Form submission failed')
-
-      setFormStatus("success")
-
-      // Reset form
-      setName("")
-      setEmail("")
-      setPhone("")
-      setDate(undefined)
-      setTime("")
-      setMessage("")
-    } catch (error) {
-      setFormStatus("error")
-      setErrors(prev => ({
-        ...prev,
-        submit: error instanceof Error ? error.message : 'An error occurred while submitting the form'
-      }))
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
-
-  const getRedirectPath = () => {
-    switch (language) {
-      case "ro":
-        return "/multumim"
-      case "ar":
-        return "/shukran"
-      default:
-        return "/thank-you"
-    }
-  }
+  const { t, dir } = useLanguage()
 
   return (
     <section id="contact" className="py-20 bg-gradient-to-b from-muted to-background" dir={dir}>
       <div className="container px-4 md:px-6">
-        <div className="flex flex-col items-center justify-center space-y-4 text-center">
-          <h2 className="text-3xl font-bold">{t("contact.title")}</h2>
-          <p className="text-muted-foreground max-w-[600px]">
-            {t("contact.subtitle")}
+        <motion.div
+          className="flex flex-col items-center justify-center space-y-4 text-center mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+            {t("contact.title") || "Contact & Booking"}
+          </h2>
+          <p className="max-w-[700px] text-muted-foreground md:text-xl">
+            {t("contact.subtitle") || "Get in touch with us for professional repair services. We're here to help!"}
           </p>
-          {/* No timezone warning message in the new version */}
-        </div>
+        </motion.div>
 
-        <div className="grid gap-8 md:grid-cols-2 mt-12">
-          <div className="space-y-6">
-            {/* Static form for Netlify build */}
-            <form 
-              name="booking" 
-              method="POST"
-              data-netlify="true" 
-              data-netlify-honeypot="bot-field"
-              hidden
-            >
-              <input type="hidden" name="form-name" value="booking" />
-              <input type="hidden" name="bot-field" />
-              <input type="text" name="name" />
-              <input type="email" name="email" />
-              <input type="tel" name="phone" />
-              <input type="date" name="date" />
-              <input type="text" name="time" />
-              <textarea name="message"></textarea>
-            </form>
-
-            {/* Interactive form */}
-            <form
-              name="booking"
-              method="POST"
-              data-netlify="true"
-              data-netlify-honeypot="bot-field"
-              data-netlify-success={getRedirectPath()}
-              onSubmit={handleSubmit}
-              className="space-y-6"
-              noValidate
-            >
-              <input type="hidden" name="form-name" value="booking" />
-              <input type="hidden" name="bot-field" />
-
-              <div className="space-y-4">
-                <div className="flex items-center space-x-3 rtl:space-x-reverse">
-                  <User className="h-5 w-5 text-primary" />
-                  <Label htmlFor="name">{t("contact.name")}</Label>
-                </div>
-                <Input
-                  id="name"
-                  name="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder={t("contact.namePlaceholder")}
-                  className="w-full"
-                />
-                {errors.name && <p className="text-sm text-destructive">{errors.name}</p>}
-              </div>
-
-              <div className="space-y-4">
-                <div className="flex items-center space-x-3 rtl:space-x-reverse">
-                  <Mail className="h-5 w-5 text-primary" />
-                  <Label htmlFor="email">{t("contact.email")}</Label>
-                </div>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder={t("contact.emailPlaceholder")}
-                  className="w-full"
-                />
-                {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
-              </div>
-
-              <div className="space-y-4">
-                <div className="flex items-center space-x-3 rtl:space-x-reverse">
-                  <Phone className="h-5 w-5 text-primary" />
-                  <Label htmlFor="phone">{t("contact.phone")}</Label>
-                </div>
-                <Input
-                  id="phone"
-                  name="phone"
-                  type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder={t("contact.phonePlaceholder")}
-                  className="w-full"
-                />
-                {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
-              </div>
-
-              <div className="space-y-4">
-                <div className="flex items-center space-x-3 rtl:space-x-reverse">
-                  <CalendarIcon className="h-5 w-5 text-primary" />
-                  <Label>{t("contact.date")}</Label>
-                </div>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className={cn(
-                        "w-full justify-start text-left font-normal",
-                        !date && "text-muted-foreground"
-                      )}
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {date ? format(date, "PPP") : <span>{t("contact.selectDate")}</span>}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent 
-                    className="w-auto p-0 z-[100]"
-                    side="bottom"
-                    align="start"
-                    sideOffset={4}
-                  >
-                    <Calendar
-                      mode="single"
-                      selected={date}
-                      onSelect={setDate}
-                      initialFocus
-                      disabled={(date) => isBefore(date, new Date())}
-                    />
-                  </PopoverContent>
-                </Popover>
-                <input type="hidden" name="date" value={date ? format(date, "yyyy-MM-dd") : ""} />
-                {errors.date && <p className="text-sm text-destructive">{errors.date}</p>}
-              </div>
-
-              <div className="space-y-4">
-                <div className="flex items-center space-x-3 rtl:space-x-reverse">
-                  <Clock className="h-5 w-5 text-primary" />
-                  <Label>{t("contact.time")}</Label>
-                </div>
-                <Input
-                  id="time"
-                  name="time"
-                  type="time"
-                  value={time}
-                  onChange={(e) => setTime(e.target.value)}
-                  className="w-full"
-                />
-                <input type="hidden" name="time" value={time} />
-                {errors.time && <p className="text-sm text-destructive">{errors.time}</p>}
-              </div>
-
-              <div className="space-y-4">
-                <div className="flex items-center space-x-3 rtl:space-x-reverse">
-                  <MessageSquare className="h-5 w-5 text-primary" />
-                  <Label htmlFor="message">{t("contact.message")}</Label>
-                </div>
-                <Textarea
-                  id="message"
-                  name="message"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  placeholder={t("contact.messagePlaceholder")}
-                  className="min-h-[100px]"
-                />
-              </div>
-
-              <div className="space-y-4">
-                <Button
-                  type="submit"
-                  className="w-full"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      {t("contact.submitting")}
-                    </>
-                  ) : (
-                    <>
-                      <CheckCircle2 className="mr-2 h-4 w-4" />
-                      {t("contact.submit")}
-                    </>
-                  )}
-                </Button>
-
-                {/* Error messages */}
-                {Object.entries(errors).map(([field, message]) => (
-                  <p 
-                    key={field} 
-                    className="text-sm text-destructive dark:text-red-400"
-                    role="alert"
-                  >
-                    {message}
-                  </p>
-                ))}
-
-                {/* Form status messages */}
-                {formStatus === "success" && (
-                  <div className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg text-green-700 dark:text-green-400">
-                    <p className="font-medium">{t("contact.toast.success.title")}</p>
-                    <p className="text-sm">{t("contact.toast.success.description")}</p>
-                  </div>
-                )}
-
-                {formStatus === "error" && (
-                  <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-700 dark:text-red-400">
-                    <p className="font-medium">{t("contact.toast.error.title")}</p>
-                    <p className="text-sm">{t("contact.toast.error.description")}</p>
-                  </div>
-                )}
-              </div>
-            </form>
-          </div>
-
-          <div className="space-y-8">
+        <div className="grid gap-8 lg:grid-cols-2">
+          <motion.div
+            className="space-y-8"
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
             <div className="space-y-4">
-              <h3 className="text-xl font-bold flex items-center gap-2">
-                <MessageSquare className="h-5 w-5 text-primary" />
-                {t("contact.orContactDirectly")}
-              </h3>
+              <h3 className="text-2xl font-bold">{t("contact.ourServices") || "Our Professional Services"}</h3>
+              <div className="grid gap-4">
+                <div className="flex items-center space-x-3 p-4 rounded-lg border bg-card hover:bg-accent transition-colors rtl:space-x-reverse">
+                  <div className="p-2 rounded-full bg-primary/10">
+                    <Tv className="h-5 w-5 text-primary" />
+                  </div>
+                  <span className="font-medium">{t("services.tv.title") || "TV Repairs"}</span>
+                </div>
+                <div className="flex items-center space-x-3 p-4 rounded-lg border bg-card hover:bg-accent transition-colors rtl:space-x-reverse">
+                  <div className="p-2 rounded-full bg-primary/10">
+                    <Wind className="h-5 w-5 text-primary" />
+                  </div>
+                  <span className="font-medium">{t("services.acCleaning.title") || "AC Cleaning"}</span>
+                </div>
+                <div className="flex items-center space-x-3 p-4 rounded-lg border bg-card hover:bg-accent transition-colors rtl:space-x-reverse">
+                  <div className="p-2 rounded-full bg-primary/10">
+                    <Thermometer className="h-5 w-5 text-primary" />
+                  </div>
+                  <span className="font-medium">{t("services.acInstallation.title") || "AC Installation"}</span>
+                </div>
+                <div className="flex items-center space-x-3 p-4 rounded-lg border bg-card hover:bg-accent transition-colors rtl:space-x-reverse">
+                  <div className="p-2 rounded-full bg-primary/10">
+                    <Wrench className="h-5 w-5 text-primary" />
+                  </div>
+                  <span className="font-medium">{t("services.freon.title") || "Freon Check"}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="text-2xl font-bold">{t("contact.orContactDirectly") || "Or contact us directly"}</h3>
               <div className="space-y-4">
                 <a
                   href="tel:+40741318528"
@@ -440,40 +96,17 @@ export function ContactSection() {
                 </a>
               </div>
             </div>
+          </motion.div>
 
-            <div className="space-y-4">
-              <h3 className="text-xl font-bold flex items-center gap-2">
-                <Wrench className="h-5 w-5 text-primary" />
-                {t("contact.ourServices")}
-              </h3>
-              <div className="grid gap-4">
-                <div className="flex items-center space-x-3 p-4 rounded-lg border bg-card rtl:space-x-reverse">
-                  <div className="p-2 rounded-full bg-primary/10">
-                    <Wrench className="h-5 w-5 text-primary" />
-                  </div>
-                  <span className="font-medium">{t("services.tv.title")}</span>
-                </div>
-                <div className="flex items-center space-x-3 p-4 rounded-lg border bg-card rtl:space-x-reverse">
-                  <div className="p-2 rounded-full bg-primary/10">
-                    <Settings className="h-5 w-5 text-primary" />
-                  </div>
-                  <span className="font-medium">{t("services.acCleaning.title")}</span>
-                </div>
-                <div className="flex items-center space-x-3 p-4 rounded-lg border bg-card rtl:space-x-reverse">
-                  <div className="p-2 rounded-full bg-primary/10">
-                    <Building2 className="h-5 w-5 text-primary" />
-                  </div>
-                  <span className="font-medium">{t("services.acInstallation.title")}</span>
-                </div>
-                <div className="flex items-center space-x-3 p-4 rounded-lg border bg-card rtl:space-x-reverse">
-                  <div className="p-2 rounded-full bg-primary/10">
-                    <Shield className="h-5 w-5 text-primary" />
-                  </div>
-                  <span className="font-medium">{t("services.freon.title")}</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="bg-card p-6 rounded-lg border shadow-lg"
+          >
+            <BookingForm />
+          </motion.div>
         </div>
       </div>
     </section>
