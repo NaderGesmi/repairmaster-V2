@@ -2,7 +2,6 @@
 
 import { useLanguage } from "@/components/language-provider"
 import { motion } from "framer-motion"
-import Image from "next/image"
 
 export function HeroSection() {
   const { t, dir } = useLanguage()
@@ -48,13 +47,11 @@ export function HeroSection() {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <div className="relative w-full max-w-md aspect-video rounded-xl overflow-hidden shadow-xl">
-              <Image
+              <img
                 src="https://res.cloudinary.com/katakuri740/image/upload/w_1200,q_75/v1748195230/dkbpw2byabqk306ckpeb.jpg"
                 alt={t("hero.imageAlt")}
-                fill
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-cover transition-transform duration-300 group-hover:scale-110"
-                priority
+                className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110"
+                loading="eager"
               />
             </div>
           </motion.div>
