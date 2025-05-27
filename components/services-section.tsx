@@ -1,99 +1,133 @@
 "use client"
 
 import { useLanguage } from "@/components/language-provider"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter } from "@/components/ui/card"
-import { Tv, Wind, Thermometer, Wrench, Settings, Shield } from "lucide-react"
-import Link from "next/link"
 import { motion } from "framer-motion"
+import { Button } from "@/components/ui/button"
+import { Wind, Thermometer, Wrench, Tv, ArrowRight } from "lucide-react"
 
 export function ServicesSection() {
   const { t, dir } = useLanguage()
 
   const services = [
     {
-      icon: <Tv className="h-10 w-10 text-primary" />,
-      title: t("services.tv.title"),
-      description: t("services.tv.description"),
-      image: "/images/tv-repair.jpg",
+      icon: Wind,
+      title: t("services.acCleaning.title") || "AC Cleaning",
+      description: t("services.acCleaning.description") || "Professional cleaning and complete sanitization for air conditioning units.",
+      price: "150 RON",
+      value: "ac-cleaning"
     },
     {
-      icon: <Wind className="h-10 w-10 text-primary" />,
-      title: t("services.acCleaning.title"),
-      description: t("services.acCleaning.description"),
-      image: "/images/ac-cleaning.jpg",
+      icon: Thermometer,
+      title: t("services.acInstallation.title") || "AC Installation",
+      description: t("services.acInstallation.description") || "Professional installation of air conditioning units.",
+      price: "200 RON",
+      value: "ac-installation"
     },
     {
-      icon: <Thermometer className="h-10 w-10 text-primary" />,
-      title: t("services.acInstallation.title"),
-      description: t("services.acInstallation.description"),
-      image: "/images/ac-install.jpg",
+      icon: Wrench,
+      title: t("services.freon.title") || "Freon Check",
+      description: t("services.freon.description") || "Testing and refilling with freon for optimal performance.",
+      price: "100 RON",
+      value: "freon-check"
     },
     {
-      icon: <Wrench className="h-10 w-10 text-primary" />,
-      title: t("services.freon.title"),
-      description: t("services.freon.description"),
-      image: "/images/freon.jpg",
-    },
-    {
-      icon: <Shield className="h-10 w-10 text-primary" />,
-      title: t("services.diagnostics.title"),
-      description: t("services.diagnostics.description"),
-      image: "/images/diagnostics.jpg",
-    },
+      icon: Tv,
+      title: t("services.diagnostics.title") || "Diagnostics",
+      description: t("services.diagnostics.description") || "In-depth diagnostics for identifying and resolving issues.",
+      price: "80 RON",
+      value: "diagnostics"
+    }
   ]
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5
+      }
+    }
+  }
+
+  const scrollToContact = (serviceValue: string) => {
+    const contactSection = document.getElementById('contact')
+    if (contactSection) {
+      // Set the service in the form
+      const serviceSelect = document.getElementById('service') as HTMLSelectElement
+      if (serviceSelect) {
+        serviceSelect.value = serviceValue
+        // Trigger change event
+        const event = new Event('change', { bubbles: true })
+        serviceSelect.dispatchEvent(event)
+      }
+      
+      // Scroll to contact section
+      contactSection.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   return (
-    <section id="services" className="py-16 bg-background" dir={dir}>
+    <section className="py-20 bg-gradient-to-b from-background to-muted" dir={dir}>
       <div className="container px-4 md:px-6">
         <motion.div
-          className="flex flex-col items-center justify-center space-y-4 text-center"
+          className="flex flex-col items-center justify-center space-y-4 text-center mb-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">{t("services.title")}</h2>
-          <p className="max-w-[700px] text-muted-foreground md:text-xl">{t("services.subtitle")}</p>
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80">
+            {t("services.title") || "Services & Pricing"}
+          </h2>
+          <p className="max-w-[700px] text-muted-foreground md:text-xl">
+            {t("services.subtitle") || "Professional repair services at competitive prices"}
+          </p>
         </motion.div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
-          {services.map((service, index) => (
+
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid gap-6 md:grid-cols-2 lg:grid-cols-4"
+        >
+          {services.map((service) => (
             <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              key={service.title}
+              variants={itemVariants}
+              className="group relative bg-card rounded-lg border p-6 hover:shadow-lg transition-all duration-300"
             >
-              <Card className="h-full flex flex-col">
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={service.image || "/placeholder.svg"}
-                    alt={service.title}
-                    className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
-                    loading={index < 2 ? "eager" : "lazy"}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
-                    <div className="p-4 w-full">
-                      <h3 className="text-xl font-bold text-white">{service.title}</h3>
-                    </div>
-                  </div>
+              <div className="flex flex-col h-full">
+                <div className="p-2 rounded-full bg-primary/10 w-fit mb-4 group-hover:bg-primary/20 transition-colors">
+                  <service.icon className="h-6 w-6 text-primary" />
                 </div>
-                <CardContent className="flex-grow pt-4">
-                  <CardDescription>{service.description}</CardDescription>
-                </CardContent>
-                <CardFooter className="flex flex-col gap-2 pt-2">
-                  <Button asChild className="w-full">
-                    <Link href="#pricing">{t("services.details")}</Link>
+                <h3 className="text-xl font-bold mb-2">{service.title}</h3>
+                <p className="text-muted-foreground mb-4 flex-grow">{service.description}</p>
+                <div className="space-y-4">
+                  <p className="text-2xl font-bold text-primary">{service.price}</p>
+                  <Button 
+                    onClick={() => scrollToContact(service.value)}
+                    className="w-full group-hover:bg-primary/90 transition-colors"
+                  >
+                    {t("services.bookNow") || "Book Now"}
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
-                  <Button asChild className="w-full">
-                    <Link href={`https://wa.me/+40741318528?text=A%C8%99%20dori%20s%C4%83%20programez%20un%20serviciu%20de%20${encodeURIComponent(service.title)}.`}>{t("services.book")}</Link>
-                  </Button>
-                </CardFooter>
-              </Card>
+                </div>
+              </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

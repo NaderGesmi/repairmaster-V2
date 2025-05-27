@@ -55,30 +55,35 @@ export const translations = {
       imageAlt: "Repair technician fixing electronics",
     },
     services: {
-      title: "Our Services",
-      subtitle: "We offer complete repair and maintenance services for electronics and air conditioning systems.",
+      title: "Services & Pricing",
+      subtitle: "Professional repair services at competitive prices",
       tv: {
         title: "TV Repairs",
         description: "We repair all types of LED, LCD, and Smart TVs.",
       },
       acCleaning: {
         title: "AC Cleaning",
-        description: "Professional cleaning and full sanitization for air conditioners.",
+        description: "Professional cleaning and complete sanitization for air conditioning units.",
+        price: "150 RON"
       },
       acInstallation: {
         title: "AC Installation",
         description: "Professional installation of air conditioning units.",
+        price: "200 RON"
       },
       freon: {
         title: "Freon Check",
-        description: "Testing and refilling freon for optimal performance.",
+        description: "Testing and refilling with freon for optimal performance.",
+        price: "100 RON"
       },
       diagnostics: {
         title: "Diagnostics",
-        description: "Thorough diagnostics to identify and fix issues.",
+        description: "In-depth diagnostics for identifying and resolving issues.",
+        price: "80 RON"
       },
       details: "Details & Pricing",
       book: "Book Now",
+      bookNow: "Book Now"
     },
     socialProof: {
       title: "See real repair videos on:",
@@ -314,9 +319,8 @@ export const translations = {
       imageAlt: "Tehnician reparând electronice",
     },
     services: {
-      title: "Serviciile Noastre",
-      subtitle:
-        "Oferim servicii complete de reparații și întreținere pentru electronice și sisteme de aer condiționat.",
+      title: "Servicii și Prețuri",
+      subtitle: "Servicii profesionale de reparații la prețuri competitive",
       tv: {
         title: "Reparații TV",
         description: "Reparăm toate tipurile de televizoare LED, LCD și Smart TV.",
@@ -324,21 +328,26 @@ export const translations = {
       acCleaning: {
         title: "Curățare AC",
         description: "Curățare profesională și igienizare completă pentru aparate de aer condiționat.",
+        price: "150 RON"
       },
       acInstallation: {
         title: "Instalare AC",
         description: "Instalare profesională a unităților de aer condiționat.",
+        price: "200 RON"
       },
       freon: {
         title: "Verificare Freon",
         description: "Testare și reumplere cu freon pentru performanță optimă.",
+        price: "100 RON"
       },
       diagnostics: {
         title: "Diagnosticare",
         description: "Diagnosticare aprofundată pentru identificarea și rezolvarea problemelor.",
+        price: "80 RON"
       },
       details: "Detalii și Prețuri",
       book: "Programează Acum",
+      bookNow: "Programează Acum"
     },
     socialProof: {
       title: "Vezi videoclipuri reale de reparații pe:",
@@ -596,6 +605,7 @@ export const translations = {
       },
       details: "التفاصيل والأسعار",
       book: "احجز الآن",
+      bookNow: "احجز الآن"
     },
     socialProof: {
       title: "شاهد عملنا الاحترافي",

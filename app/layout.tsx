@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { LanguageProvider } from "@/components/language-provider"
 import { Toaster } from "@/components/toaster"
 import { StickyContact } from "@/components/sticky-contact"
+import { WhatsAppButton } from "@/components/whatsapp-button"
 
 export const metadata = {
   title: "RepairMaster - Professional Repair Services",
@@ -29,6 +30,7 @@ export default function RootLayout({
               <Footer />
               <Toaster />
               <StickyContact />
+              <WhatsAppButton />
             </div>
           </ThemeProvider>
         </LanguageProvider>

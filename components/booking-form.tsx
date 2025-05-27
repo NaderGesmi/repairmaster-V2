@@ -11,7 +11,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, User, Phone, Wrench, MapPin, Clock, MessageSquare, Map, Navigation } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface FormData {
   name: string;
@@ -208,30 +209,58 @@ export default function BookingForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="space-y-2">
-        <Label htmlFor="name">{t("booking.name") || "Full Name"}</Label>
+      <motion.div 
+        className="space-y-2"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        <Label htmlFor="name" className="flex items-center gap-2">
+          <User className="h-4 w-4 text-primary" />
+          {t("booking.name") || "Full Name"}
+        </Label>
         <Input
           id="name"
           placeholder={t("booking.namePlaceholder") || "Enter your full name"}
           value={formData.name}
           onChange={handleInputChange}
           required
+          className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
         />
-      </div>
-      <div className="space-y-2">
-        <Label htmlFor="phone">{t("booking.phone") || "Phone Number"}</Label>
+      </motion.div>
+
+      <motion.div 
+        className="space-y-2"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, delay: 0.1 }}
+      >
+        <Label htmlFor="phone" className="flex items-center gap-2">
+          <Phone className="h-4 w-4 text-primary" />
+          {t("booking.phone") || "Phone Number"}
+        </Label>
         <Input
           id="phone"
           placeholder={t("booking.phonePlaceholder") || "Enter your phone number"}
           value={formData.phone}
           onChange={handleInputChange}
           required
+          className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
         />
-      </div>
-      <div className="space-y-2">
-        <Label htmlFor="service">{t("booking.service") || "Select a Service"}</Label>
+      </motion.div>
+
+      <motion.div 
+        className="space-y-2"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, delay: 0.2 }}
+      >
+        <Label htmlFor="service" className="flex items-center gap-2">
+          <Wrench className="h-4 w-4 text-primary" />
+          {t("booking.service") || "Select a Service"}
+        </Label>
         <Select onValueChange={handleServiceChange} value={formData.service} required>
-          <SelectTrigger id="service">
+          <SelectTrigger id="service" className="transition-all duration-200 focus:ring-2 focus:ring-primary/20">
             <SelectValue placeholder={t("booking.selectService") || "Select a Service"} />
           </SelectTrigger>
           <SelectContent>
@@ -242,10 +271,18 @@ export default function BookingForm() {
             ))}
           </SelectContent>
         </Select>
-      </div>
+      </motion.div>
 
-      <div className="space-y-2">
-        <Label>{t("booking.addressType") || "Address Input Method"}</Label>
+      <motion.div 
+        className="space-y-2"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, delay: 0.3 }}
+      >
+        <Label className="flex items-center gap-2">
+          <Map className="h-4 w-4 text-primary" />
+          {t("booking.addressType") || "Address Input Method"}
+        </Label>
         <RadioGroup
           value={formData.addressType}
           onValueChange={handleAddressTypeChange}
@@ -253,106 +290,201 @@ export default function BookingForm() {
         >
           <div className="flex items-center space-x-2 rtl:space-x-reverse">
             <RadioGroupItem value="auto" id="auto-location" />
-            <Label htmlFor="auto-location">{t("booking.autoLocation") || "Use My Location"}</Label>
+            <Label htmlFor="auto-location" className="flex items-center gap-2">
+              <Navigation className="h-4 w-4 text-primary" />
+              {t("booking.autoLocation") || "Use My Location"}
+            </Label>
           </div>
           <div className="flex items-center space-x-2 rtl:space-x-reverse">
             <RadioGroupItem value="manual" id="manual-location" />
-            <Label htmlFor="manual-location">{t("booking.manualLocation") || "Enter Manually"}</Label>
+            <Label htmlFor="manual-location" className="flex items-center gap-2">
+              <MapPin className="h-4 w-4 text-primary" />
+              {t("booking.manualLocation") || "Enter Manually"}
+            </Label>
           </div>
         </RadioGroup>
-      </div>
+      </motion.div>
 
       {formData.addressType === "manual" && (
-        <div className="space-y-2">
-          <Label htmlFor="address">{t("booking.address") || "Address"}</Label>
+        <motion.div 
+          className="space-y-2"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.4 }}
+        >
+          <Label htmlFor="address" className="flex items-center gap-2">
+            <MapPin className="h-4 w-4 text-primary" />
+            {t("booking.address") || "Address"}
+          </Label>
           <Input
             id="address"
             placeholder={t("booking.addressPlaceholder") || "Enter your address"}
             value={formData.address}
             onChange={handleInputChange}
             required
+            className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
           />
-        </div>
+        </motion.div>
       )}
 
-       {formData.addressType === "auto" && loading && (
-         <div className="space-y-2">
-            <Label htmlFor="address">{t("booking.address") || "Address"}</Label>
-             <Input
-              id="address"
-              placeholder={t("booking.addressPlaceholder") || "Fetching location..."}
-              value={formData.address}
-              onChange={handleInputChange}
-              disabled
-              required
-            />
-         </div>
-       )}
+      {formData.addressType === "auto" && loading && (
+        <motion.div 
+          className="space-y-2"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.4 }}
+        >
+          <Label htmlFor="address" className="flex items-center gap-2">
+            <MapPin className="h-4 w-4 text-primary animate-pulse" />
+            {t("booking.address") || "Address"}
+          </Label>
+          <Input
+            id="address"
+            placeholder={t("booking.addressPlaceholder") || "Fetching location..."}
+            value={formData.address}
+            onChange={handleInputChange}
+            disabled
+            required
+            className="transition-all duration-200"
+          />
+        </motion.div>
+      )}
 
-       {formData.addressType === "auto" && !loading && formData.address && (
-         <div className="space-y-2">
-             <Label htmlFor="address">{t("booking.address") || "Address"}</Label>
-              <Input
-               id="address"
-               placeholder={t("booking.addressPlaceholder") || "Enter your address"}
-               value={formData.address}
-               onChange={handleInputChange}
-               required
-             />
-          </div>
-       )}
+      {formData.addressType === "auto" && !loading && formData.address && (
+        <motion.div 
+          className="space-y-2"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.4 }}
+        >
+          <Label htmlFor="address" className="flex items-center gap-2">
+            <MapPin className="h-4 w-4 text-primary" />
+            {t("booking.address") || "Address"}
+          </Label>
+          <Input
+            id="address"
+            placeholder={t("booking.addressPlaceholder") || "Enter your address"}
+            value={formData.address}
+            onChange={handleInputChange}
+            required
+            className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
+          />
+        </motion.div>
+      )}
 
-      <div className="space-y-2">
-        <Label htmlFor="datetime">{t("booking.datetime") || "Preferred Date & Time"}</Label>
+      <motion.div 
+        className="space-y-2"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, delay: 0.5 }}
+      >
+        <Label htmlFor="datetime" className="flex items-center gap-2">
+          <Clock className="h-4 w-4 text-primary" />
+          {t("booking.datetime") || "Preferred Date & Time"}
+        </Label>
         <div className="flex gap-4">
-           <Popover>
-             <PopoverTrigger asChild>
-               <Button
-                 variant={"outline"}
-                 className={
-                   `w-full justify-start text-left font-normal ${!date && "text-muted-foreground"}`
-                 }
-               >
-                 <CalendarIcon className="mr-2 h-4 w-4" />
-                 {date ? format(date, "PPP") : <span className="rtl:text-right">{t("contact.selectDate") || "Pick a date"}</span>}
-               </Button>
-             </PopoverTrigger>
-             <PopoverContent className="w-auto p-0">
-               <Calendar
-                 mode="single"
-                 selected={date}
-                 onSelect={handleDateSelect}
-                 initialFocus
-               />
-             </PopoverContent>
-           </Popover>
-           <Input
-             type="time"
-             id="time"
-             value={time}
-             onChange={handleTimeChange}
-             required
-             className="w-1/2"
-           />
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant={"outline"}
+                className={`w-full justify-start text-left font-normal transition-all duration-200 hover:bg-accent focus:ring-2 focus:ring-primary/20 ${
+                  !date && "text-muted-foreground"
+                }`}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {date ? format(date, "PPP") : <span className="rtl:text-right">{t("contact.selectDate") || "Pick a date"}</span>}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0">
+              <Calendar
+                mode="single"
+                selected={date}
+                onSelect={handleDateSelect}
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
+          <Input
+            type="time"
+            id="time"
+            value={time}
+            onChange={handleTimeChange}
+            required
+            className="w-1/2 transition-all duration-200 focus:ring-2 focus:ring-primary/20"
+          />
         </div>
-      </div>
+      </motion.div>
 
-      <div className="space-y-2">
-        <Label htmlFor="notes">{t("booking.notes") || "Notes (Optional)"}</Label>
+      <motion.div 
+        className="space-y-2"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, delay: 0.6 }}
+      >
+        <Label htmlFor="notes" className="flex items-center gap-2">
+          <MessageSquare className="h-4 w-4 text-primary" />
+          {t("booking.notes") || "Notes (Optional)"}
+        </Label>
         <Textarea
           id="notes"
           placeholder={t("booking.notesPlaceholder") || "Any additional information or special requests"}
           value={formData.notes}
           onChange={handleInputChange}
+          className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
         />
-      </div>
+      </motion.div>
 
-      {error && <p className="text-red-500 text-sm">{error}</p>}
-      {success && <p className="text-green-500 text-sm">{t("booking.success") || "✅ Booking sent! We'll contact you soon."}</p>}
+      {error && (
+        <motion.p 
+          className="text-red-500 text-sm"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2 }}
+        >
+          {error}
+        </motion.p>
+      )}
+      
+      {success && (
+        <motion.p 
+          className="text-green-500 text-sm"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2 }}
+        >
+          {t("booking.success") || "✅ Booking sent! We'll contact you soon."}
+        </motion.p>
+      )}
 
-      <Button type="submit" className="w-full" disabled={loading}>
-        {loading ? (t("booking.submitting") || "Submitting...") : (t("booking.submit") || "Submit Booking")}
-      </Button>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, delay: 0.7 }}
+      >
+        <Button 
+          type="submit" 
+          className="w-full transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]" 
+          disabled={loading}
+        >
+          {loading ? (
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
+            >
+              {t("booking.submitting") || "Submitting..."}
+            </motion.span>
+          ) : (
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
+            >
+              {t("booking.submit") || "Submit Booking"}
+            </motion.span>
+          )}
+        </Button>
+      </motion.div>
     </form>
   );
 } 
