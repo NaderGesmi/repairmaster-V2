@@ -6,12 +6,11 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { LanguageProvider } from "@/components/language-provider"
 import { Toaster } from "@/components/toaster"
 import { StickyContact } from "@/components/sticky-contact"
-import { WhatsAppButton } from "@/components/whatsapp-button"
 
 export const metadata = {
   title: "RepairMaster - Professional Repair Services",
   description: "Fast, reliable repairs for your home & office electronics and air conditioning in Bucharest.",
-    generator: 'v0.dev'
+  generator: 'v0.dev'
 }
 
 export default function RootLayout({
@@ -30,7 +29,6 @@ export default function RootLayout({
               <Footer />
               <Toaster />
               <StickyContact />
-              <WhatsAppButton />
             </div>
           </ThemeProvider>
         </LanguageProvider>

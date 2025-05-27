@@ -590,18 +590,22 @@ export const translations = {
       acCleaning: {
         title: "تنظيف المكيف",
         description: "تنظيف احترافي وتعقيم كامل لمكيفات الهواء.",
+        price: "150 RON"
       },
       acInstallation: {
         title: "تركيب المكيف",
         description: "تركيب احترافي لوحدات تكييف الهواء.",
+        price: "200 RON"
       },
       freon: {
         title: "فحص الفريون",
         description: "اختبار وإعادة تعبئة الفريون لأداء مثالي.",
+        price: "100 RON"
       },
       diagnostics: {
         title: "التشخيص",
         description: "تشخيص شامل لتحديد وإصلاح المشكلات.",
+        price: "80 RON"
       },
       details: "التفاصيل والأسعار",
       book: "احجز الآن",
